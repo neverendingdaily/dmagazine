@@ -4,109 +4,112 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>dマガジン 直リンクポータル</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#f4f6f9;--white:#fff;--border:#e2e8f0;--border-lt:#eef1f6;
-  --text:#1a202c;--muted:#718096;--accent:#2563eb;--accent-lt:#eff6ff;
-  --monthly-bg:#dcfce7;--monthly-c:#15803d;
-  --mook-bg:#f3e8ff;--mook-c:#7e22ce;
-  --seasonal-bg:#fef9c3;--seasonal-c:#854d0e;
-  --hdr:#1e293b;--hover:#f0f7ff;
-  --sh:0 1px 3px rgba(0,0,0,.07);--sh2:0 4px 12px rgba(0,0,0,.09);
-}
+:root{--bg:#f4f6f9;--wh:#fff;--bd:#e2e8f0;--blt:#eef1f6;--tx:#1a202c;--mu:#718096;--ac:#2563eb;--alt:#eff6ff;--mg:#dcfce7;--mc:#15803d;--sk:#f3e8ff;--sc:#7e22ce;--sg:#fef9c3;--sgc:#854d0e;--hdr:#1e293b;--hov:#f0f7ff;--sh:0 1px 3px rgba(0,0,0,.07);--sh2:0 4px 12px rgba(0,0,0,.09);--sh3:0 8px 24px rgba(0,0,0,.15);}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:14px;line-height:1.6;padding-bottom:60px;}
-
-/* ── HEADER ── */
-.hdr{background:var(--hdr);color:#fff;padding:16px 26px;display:flex;align-items:center;gap:13px;}
-.logo{width:36px;height:36px;background:#3b82f6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:#fff;flex-shrink:0;}
-.hdr h1{font-size:15px;font-weight:700;}
-.hdr p{font-size:11px;color:#94a3b8;margin-top:1px;font-family:'DM Mono',monospace;}
-.updated{margin-left:auto;font-size:11px;color:#64748b;font-family:'DM Mono',monospace;white-space:nowrap;}
-
-/* ── TOOLBAR ── */
-.toolbar{background:var(--white);border-bottom:1px solid var(--border);padding:9px 26px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;position:sticky;top:0;z-index:20;box-shadow:var(--sh);}
-.sw{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:0 9px;flex:1;min-width:130px;max-width:260px;}
-.sw input{background:none;border:none;outline:none;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--text);padding:7px 0;width:100%;}
-.sw input::placeholder{color:var(--muted);}
-.sw svg{color:var(--muted);flex-shrink:0;}
+body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;font-size:14px;line-height:1.6;padding-bottom:60px;}
+.ebanner{display:none;background:#fff7ed;border-bottom:2px solid #f97316;padding:7px 24px;font-size:12px;color:#ea580c;font-weight:600;align-items:center;gap:8px;}
+.ebanner.show{display:flex;}
+.hdr{background:var(--hdr);color:#fff;padding:13px 24px;display:flex;align-items:center;gap:12px;}
+.logo{width:33px;height:33px;background:#3b82f6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;flex-shrink:0;}
+.ht h1{font-size:14px;font-weight:700;}
+.ht p{font-size:10px;color:#94a3b8;font-family:'DM Mono',monospace;}
+.hr{margin-left:auto;}
+.upd{font-size:10px;color:#64748b;font-family:'DM Mono',monospace;}
+.tb{background:var(--wh);border-bottom:1px solid var(--bd);padding:8px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:20;box-shadow:var(--sh);}
+.sw{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--bd);border-radius:7px;padding:0 8px;flex:1;min-width:120px;max-width:240px;}
+.sw input{background:none;border:none;outline:none;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--tx);padding:6px 0;width:100%;}
+.sw input::placeholder{color:var(--mu);}
 .fbs{display:flex;gap:4px;flex-wrap:wrap;}
-.fb{padding:5px 10px;border-radius:20px;border:1px solid var(--border);background:var(--white);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:500;cursor:pointer;color:var(--muted);transition:all .15s;}
-.fb:hover{border-color:var(--accent);color:var(--accent);}
-.fb.on{background:var(--accent);border-color:var(--accent);color:#fff;}
-.cnt{font-size:12px;color:var(--muted);margin-left:auto;font-family:'DM Mono',monospace;}
-
-/* ── MAIN ── */
-.main{padding:18px 26px;max-width:1100px;}
-.sec-lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px;display:flex;align-items:center;gap:7px;}
-.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
-.acc-list{display:flex;flex-direction:column;gap:5px;}
-
-/* ── ACCORDION ── */
-.acc-item{background:var(--white);border:1px solid var(--border);border-radius:9px;overflow:hidden;box-shadow:var(--sh);transition:box-shadow .15s;}
-.acc-item:hover{box-shadow:var(--sh2);}
-.acc-item.hidden{display:none;}
-
-.acc-hdr{display:flex;align-items:center;gap:8px;padding:11px 14px;cursor:pointer;user-select:none;background:var(--white);border:none;width:100%;text-align:left;transition:background .12s;}
-.acc-hdr:hover{background:#f8fafc;}
-.chevron{width:17px;height:17px;flex-shrink:0;color:var(--muted);transition:transform .32s cubic-bezier(.4,0,.2,1);}
-.acc-item.open .chevron{transform:rotate(90deg);}
-.acc-name{font-weight:600;font-size:14px;flex:1;color:var(--text);}
-.acc-note{font-size:11px;color:var(--muted);}
-.ic{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:2px 6px;}
-
-/* search button */
-.btn-search{display:inline-flex;align-items:center;gap:3px;background:#f1f5f9;border:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:500;padding:3px 8px;border-radius:5px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:all .15s;flex-shrink:0;}
-.btn-search:hover{background:var(--accent-lt);border-color:var(--accent);color:var(--accent);}
-
-.badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;letter-spacing:.03em;}
-.badge.monthly{background:var(--monthly-bg);color:var(--monthly-c);}
-.badge.mook{background:var(--mook-bg);color:var(--mook-c);}
-.badge.seasonal{background:var(--seasonal-bg);color:var(--seasonal-c);}
-
-/* ── BODY ── */
-.acc-body{height:0;overflow:hidden;transition:height .35s cubic-bezier(.4,0,.2,1);}
-.body-in{border-top:1px solid var(--border-lt);background:#fafbfd;}
-
+.fb{padding:4px 10px;border-radius:20px;border:1px solid var(--bd);background:var(--wh);font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:500;cursor:pointer;color:var(--mu);transition:all .15s;}
+.fb:hover{border-color:var(--ac);color:var(--ac);}
+.fb.on{background:var(--ac);border-color:var(--ac);color:#fff;}
+.cnt{font-size:11px;color:var(--mu);font-family:'DM Mono',monospace;}
+.tbr{margin-left:auto;display:flex;gap:6px;}
+.bet{padding:5px 12px;border-radius:6px;border:1.5px solid var(--bd);background:var(--wh);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:var(--mu);display:flex;align-items:center;gap:5px;transition:all .15s;}
+.bet:hover{border-color:#f97316;color:#f97316;}
+.bet.act{background:#fff7ed;border-color:#f97316;color:#ea580c;}
+.bex{padding:5px 12px;border-radius:6px;border:1.5px solid #10b981;background:#ecfdf5;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:#059669;display:flex;align-items:center;gap:5px;}
+.bex:hover{background:#d1fae5;}
+.main{padding:16px 24px;max-width:1100px;}
+.slbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin:22px 0 8px;display:flex;align-items:center;gap:7px;}
+.slbl::after{content:'';flex:1;height:1px;background:var(--bd);}
+.alist{display:flex;flex-direction:column;gap:5px;}
+.ai{background:var(--wh);border:1px solid var(--bd);border-radius:9px;overflow:hidden;box-shadow:var(--sh);transition:box-shadow .15s;}
+.ai:hover{box-shadow:var(--sh2);}
+.ai.hidden{display:none;}
+.ai.eon{border-color:#fed7aa;}
+.ah{display:flex;align-items:center;gap:7px;padding:10px 13px;cursor:pointer;user-select:none;background:var(--wh);border:none;width:100%;text-align:left;transition:background .12s;}
+.ah:hover{background:#f8fafc;}
+.cv{width:16px;height:16px;flex-shrink:0;color:var(--mu);transition:transform .32s cubic-bezier(.4,0,.2,1);}
+.ai.open .cv{transform:rotate(90deg);}
+.an{font-weight:600;font-size:13px;flex:1;color:var(--tx);}
+.nt{font-size:10px;color:var(--mu);}
+.ic{font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:2px 6px;}
+.ic0{font-size:10px;color:#d97706;font-family:'DM Mono',monospace;background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:2px 6px;}
+.bdg{font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.bdg.monthly{background:var(--mg);color:var(--mc);}
+.bdg.mook{background:var(--sk);color:var(--sc);}
+.bdg.seasonal{background:var(--sg);color:var(--sgc);}
+.bsrch{display:inline-flex;align-items:center;gap:3px;background:#f1f5f9;border:1px solid var(--bd);color:var(--mu);font-size:10px;font-weight:500;padding:2px 7px;border-radius:5px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:all .15s;flex-shrink:0;}
+.bsrch:hover{background:var(--alt);border-color:var(--ac);color:var(--ac);}
+.ab{height:0;overflow:hidden;transition:height .35s cubic-bezier(.4,0,.2,1);}
+.bin{border-top:1px solid var(--blt);background:#fafbfd;}
+/* empty state */
+.empty-state{padding:16px;text-align:center;font-size:12px;color:var(--mu);}
 table{width:100%;border-collapse:collapse;}
-thead th{padding:7px 12px;font-size:11px;font-weight:600;color:var(--muted);text-align:left;background:#f1f5f9;border-bottom:1px solid var(--border);letter-spacing:.05em;}
-tbody tr{border-bottom:1px solid var(--border-lt);transition:background .1s;}
+thead th{padding:6px 11px;font-size:10px;font-weight:600;color:var(--mu);text-align:left;background:#f1f5f9;border-bottom:1px solid var(--bd);letter-spacing:.04em;}
+tbody tr{border-bottom:1px solid var(--blt);transition:background .1s;}
 tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:var(--hover);}
-td{padding:8px 12px;vertical-align:middle;}
-.td-iss{font-weight:500;color:var(--text);}
-/* clickable item URL */
-.td-url a{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;white-space:nowrap;}
-.td-url a:hover{text-decoration:underline;}
-.td-url .url-text{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
-
-.btn-v{display:inline-flex;align-items:center;gap:3px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;padding:5px 11px;border-radius:6px;text-decoration:none;white-space:nowrap;transition:opacity .15s,transform .1s;}
-.btn-v:hover{opacity:.85;transform:translateY(-1px);}
-.btn-med{display:inline-flex;align-items:center;gap:3px;background:#d97706;color:#fff;font-size:12px;font-weight:600;padding:5px 11px;border-radius:6px;text-decoration:none;transition:opacity .15s;}
-.btn-med:hover{opacity:.85;}
-.media-box{padding:13px 15px;font-size:12px;color:var(--muted);line-height:1.7;}
-
-/* notice */
-.notice{margin:26px 0;background:#fffbeb;border:1px solid #fde68a;border-left:3px solid #f59e0b;border-radius:8px;padding:11px 15px;font-size:12px;color:#78350f;line-height:1.8;}
-.notice code{background:#f1f5f9;padding:1px 5px;border-radius:3px;font-size:11px;}
+tbody tr:hover{background:var(--hov);}
+td{padding:7px 11px;vertical-align:middle;}
+.ti{font-weight:500;color:var(--tx);font-size:13px;}
+.tu a{font-family:'DM Mono',monospace;font-size:10px;color:var(--ac);text-decoration:none;white-space:nowrap;}
+.tu a:hover{text-decoration:underline;}
+.tu a.ml{color:#d97706;}
+.bv{display:inline-flex;align-items:center;gap:3px;background:var(--ac);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;text-decoration:none;white-space:nowrap;transition:opacity .15s,transform .1s;}
+.bv:hover{opacity:.85;transform:translateY(-1px);}
+.bmo{display:inline-flex;align-items:center;gap:3px;background:#d97706;color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;text-decoration:none;white-space:nowrap;}
+.bmo:hover{opacity:.85;}
+.tmedia{display:inline-block;font-size:9px;font-weight:600;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:3px;padding:1px 5px;margin-left:3px;}
+.drbtn{display:none;background:none;border:none;color:#ef4444;cursor:pointer;font-size:15px;padding:0 3px;line-height:1;}
+.ai.eon tbody tr td .drbtn{display:inline;}
+.air td{background:#f0f7ff;padding:7px 11px;}
+.air{display:none;}
+.ai.eon .air{display:table-row;}
+.aif{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.aif input{border:1px solid var(--bd);border-radius:5px;padding:4px 7px;font-size:11px;font-family:'DM Mono',monospace;background:var(--wh);color:var(--tx);outline:none;}
+.aif input:focus{border-color:var(--ac);}
+.il{width:140px;}
+.ic2{width:210px;}
+.aif label{font-size:10px;color:var(--mu);display:flex;align-items:center;gap:3px;cursor:pointer;white-space:nowrap;}
+.bai{background:var(--ac);color:#fff;border:none;border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center;}
+.mo.show{display:flex;}
+.mbox{background:var(--wh);border-radius:12px;padding:22px;width:90%;max-width:440px;box-shadow:var(--sh3);}
+.mbox h3{font-size:14px;font-weight:700;margin-bottom:14px;}
+.mbox p{font-size:12px;color:var(--mu);margin-top:6px;}
+.mbtns{display:flex;justify-content:flex-end;gap:7px;margin-top:18px;}
+.bcanc{padding:6px 14px;border-radius:6px;border:1px solid var(--bd);background:var(--wh);font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.bok{padding:6px 14px;border-radius:6px;border:none;background:var(--ac);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.bsm{display:inline-flex;align-items:center;gap:3px;border:1px solid var(--bd);background:var(--wh);color:var(--mu);font-size:10px;font-weight:500;padding:2px 7px;border-radius:5px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
+.bsm:hover{border-color:var(--ac);color:var(--ac);}
 </style>
 </head>
 <body>
-
+<div class="ebanner" id="eb">
+  <span>✏️ 編集モード — 号の追加・削除ができます。変更はlocalStorageに自動保存</span>
+  <button class="bsm" onclick="resetData()">🔄 リセット</button>
+</div>
 <header class="hdr">
   <div class="logo">d</div>
-  <div>
-    <h1>dマガジン 直リンクポータル</h1>
-    <p>Item/Media URL → View URL 変換リンク集</p>
-  </div>
-  <span class="updated" id="updLabel">最終更新: 2026-04-25</span>
+  <div class="ht"><h1>dマガジン 直リンクポータル</h1><p>配信中の号のみ掲載 ／ 2026-04-25 時点</p></div>
+  <div class="hr"><span class="upd" id="ul">更新: 2026-04-25</span></div>
 </header>
-
-<div class="toolbar">
+<div class="tb">
   <div class="sw">
-    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input id="si" type="text" placeholder="雑誌名で絞り込み…" oninput="fil()">
   </div>
   <div class="fbs">
@@ -116,311 +119,293 @@ td{padding:8px 12px;vertical-align:middle;}
     <button class="fb" onclick="sf('mook',this)">ムック/単発</button>
   </div>
   <span class="cnt" id="cl"></span>
-</div>
-
-<div class="main" id="mc"></div>
-
-<script>
-// ─── ユーティリティ ───────────────────────────
-const BASE = 'https://dmagazine.docomo.ne.jp';
-function vUrl(c){ return `${BASE}/view/?cid=${c}&cti=&cc=1000&return_url=%2Fitem%2F${c}%2F1000%2F`; }
-function iUrl(c){ return `${BASE}/item/${c}/1000/`; }
-function gUrl(name){ return `https://www.google.com/search?q=site:dmagazine.docomo.ne.jp+${encodeURIComponent(name)}+2026`; }
-
-// ─── データ ──────────────────────────────────
-//  issues: [{label, cid}]  ← cid only, mediaUrl は特別処理
-const DATA = [
-
-// ──────────────────────────────────────────────
-//  月刊誌
-// ──────────────────────────────────────────────
-{type:'monthly', name:'ダイヤモンドZAi', issues:[
-  {label:'2026年6月号', cid:'6183f6dbe74294cbb1d92f7b6fcc32257e4c374b70f699e9156265787bf33c3e'},
-  // 4月・5月号はGoogleインデックス未収録（取得できなかった）
-  {label:'2026年3月号', cid:'099e47cfb426a7855fbb22e10abd10eb17db05ae4830789091ca77b694ac9dc8'},
-  {label:'2026年2月号', cid:'774f2955a517b83730db31a919dcc79d7141cbfc76cac3a6e25e60b7a91eb1a9'},
-  {label:'2026年1月号', cid:'99b9b0539560788e3cbc7c0014428029ac3095543955b58c562c867848b7fe26'},
-]},
-
-{type:'monthly', name:'LDK', issues:[
-  {label:'2026年5月号', cid:'f5ac757e56c94f951d19dfae7bc3faad7ceeaf1d6cce091d962e478cfeef3823'},
-  {label:'2026年4月号', cid:'57e851a643425e687f703a6e3dd65d479ba8a03be51a2e27f711fb95a4412a2e'},
-  {label:'2026年3月号', cid:'14265f0413f78651177ca6fd3b7c2f84d634f6f3fb3307b29adb70698ec923b5'},
-  {label:'2026年2月号', cid:'8fcbea5e2b623e5410b0ae08371ef0dacc0c1692a8c6c0ea8d2614a06dbe65bf'},
-  {label:'2026年1月号', cid:'caa90561db72c8c908066790c45eb4fc7d6d9753391f3514bd3b30b853dd7ccc'},
-]},
-
-{type:'monthly', name:'LDK the Beauty', issues:[
-  {label:'2026年6月号', cid:'51a9c221b6a452a8fd49e6da8cfb449fa4bf5a73178bed3285c458cc9b80db55'},
-  {label:'2026年5月号', cid:'542c73fd1e47030a097c2302ee125728ce7bf5ab93575c8884d2311c4fede7f3'},
-  {label:'2026年4月号', cid:'42ec6d1d40e0de133b9f08c1bd5601d49b72a66191c509317c58d5a6749f8e55'},
-  {label:'2026年3月号', cid:'56a36dddd7016e31a4b5b0625319e9b63e51f51559a64c262e3ebb79c90deaee'},
-  {label:'2026年2月号', cid:'a01110ecfa52476203b66c840953112f0723c0ef68a16d9470640246a28faa8d'},
-  {label:'2026年1月号', cid:'e91321f23652f8beffd2cc0c331c9ddf3f5cfed7c0274d9db0fa60d2ecf24425'},
-]},
-
-{type:'monthly', name:'MONOQLO', issues:[
-  {label:'2026年4月号', cid:'bccd6f12a3dd589bd1d2aa5f2e14f02b81125fcddf9c7db2e3048ed0a040c4c3'},
-  {label:'2026年3月号', cid:'5f4c9fdc114721c05fc19a29a8eadc154e16382ff667a1058a380c50890c38ae'},
-  {label:'2026年2月号', cid:'c7edc0b3eabb61189a8646579006cc8e21fe90cd332f346c0e3bf3bb6a369841'},
-  {label:'2026年1月号', cid:'69ce429669268d95196a4c13599cf4e9aad2f428da1ace206b94bf4921b3764b'},
-]},
-
-{type:'monthly', name:'家電批評', issues:[
-  {label:'2026年5月号', cid:'887050f0f44e54d8c5c0ddf931c105ba4097931b8de51a43bf5aa761a3b7dbbd'},
-  {label:'2026年4月号', cid:'b13b2388b8eb0be2829865566af0e3813ee7f8b1c336938f40b5f69951a7313b'},
-  {label:'2026年3月号', cid:'4c5cbc79f512c4b55c2bc58607b2a8d74630ae09102268fea5a0d1982dca1252'},
-  {label:'2026年2月号', cid:'ae95551b68c39e74c46054521544ea3f22c8180383328eacc8b7340f899ae8e1'},
-  {label:'2026年1月号', cid:'c7595ee61def8343e257522ae656a2e587ed02e92e210f29628ebcde459a78a9'},
-]},
-
-{type:'monthly', name:'いぬのきもち', issues:[
-  {label:'2026年5月号', cid:'43e75af9a569281db78c9b0e464d626dabb6ef20ab10e791f445c1c82823113b'},
-  // 2〜4月号はインデックス未収録
-  {label:'2026年1月号', cid:'a7774964e6dde19a5c820d3d950d2afab97adf0a0e50b96d553bc4ff41ae4b3b'},
-]},
-
-{type:'monthly', name:'ねこのきもち', issues:[
-  {label:'2026年5月号', cid:'d8842ab7560d4599f50755785bcdc8644bc46efa03a4322f4a2f0f9e818a468e'},
-  // 3〜4月号はインデックス未収録
-  {label:'2026年2月号', cid:'40cfd5a092a140f53131438a571914ca0ff2010d1ef264b2a6840c16980dbcb0'},
-]},
-
-{type:'monthly', name:'NHK きょうの健康', issues:[
-  {label:'2025年8月号（直近インデックス）', cid:'a747c08bedea70db05d8bc3c4a828d2beda44ef4a6fe2ca4da14fc3373260134'},
-]},
-
-{type:'monthly', name:'からだにいいこと', issues:[
-  {label:'2025年4月号（直近インデックス）', cid:'133c91d3236750a2f9dc82c30c1868f69951589d7e50ded69a721e5d65fb2d5d'},
-]},
-
-{type:'monthly', name:'Tarzan', issues:[
-  {label:'2026年5月14日号 No.924', cid:'174bfe94e6e1b79d6ed3ff390f0839fc515a3d4b864bd4639395066f2216a55e'},
-]},
-
-{type:'monthly', name:'レタスクラブ', issues:[
-  {label:'2026年5月号', cid:'1475e7faf63ed1fc74e3209d225b3ebb508e6b169b3d88513add2252012902ee'},
-  {label:'2026年4月号', cid:'da8e6db518b9f7bd63f8589d08f24b8912686143e07b903e69e25c1e4152c972'},
-  {label:'2026年3月号', cid:'f11fe343d65aa7462d07579644aba146e4dd1858859ef0c04e2da9d1e8fac527'},
-  {label:'2026年1月号', cid:'6f2aff7b41255474e3479a1049061b013f18cb40820a905c99905fb7344fb772'},
-]},
-
-{type:'monthly', name:'サンキュ！', issues:[
-  {label:'2026年5月号', cid:'4569534d3f777a1ae394fe0ecb926349620f4134318558044e04cec3ffe801be'},
-  {label:'2026年1月号', cid:'d25b2ba3a401ddf719e0f0b57bd8055c88e8955350890d3b358c6a96f9d2dac3'},
-]},
-
-{type:'monthly', name:'ESSE', issues:[
-  {label:'2026年4月号', cid:'6101d7c418942ce4e3b74395a79f34519589a5c6c0a379588d0f8e50edd33f00'},
-]},
-
-{type:'monthly', name:'GetNavi', issues:[
-  {label:'2026年6・7月号', cid:'fe4f7ad5358098a3c3aab6ad1c55e870bed7f6c10bf95ebca46ff1f4ee5d7c2f'},
-  {label:'2026年4月号',    cid:'786091af886e7cde09860f4d7f68003a06b2ebffe7159c03a37f608e4d49310d'},
-  {label:'2026年1月号',    cid:'d6fe6e15524c478d5d84441c5aa7df87bfb409a1a07b09c510e6e792fef3749c'},
-]},
-
-{type:'monthly', name:'日経トレンディ', issues:[
-  {label:'2026年5月号', cid:'590415596d7b657c213a8d3f4dc45a82da93dbbda93c0224da4b4c3f34410d6d'},
-  {label:'2026年3月号', cid:'2b863f2ca0af0be02cb583604e4d0757dcfc823a33a4e3facf796ea7fb7087d8'},
-  {label:'2026年1月号', cid:'d0db91c1ae584fe4ce9f24f04c220bfedfe043668963f8b0b602e821deb16ea0'},
-]},
-
-{type:'monthly', name:'GoodsPress（月刊）', issues:[
-  {label:'直近号', cid:'92d52ec533d85b3c7e0791953e9334614581ebb24ecbc5ad5cb54ff2591854ea'},
-]},
-
-// ──────────────────────────────────────────────
-//  季刊 / 不定期
-// ──────────────────────────────────────────────
-{type:'seasonal', name:"Woman's SHAPE & Sports", note:'年4回発行', issues:[
-  {label:'Vol.30', cid:'98dcacab42e41b99c06e97dd3394f7ad274233c28a14444f79fc8fe6dcdef631'},
-  {label:'Vol.28', cid:'a9ba4e2fb5f149b253382ec1654b557efa9a2108f6d03195d1cb780a80bbb497'},
-]},
-
-{type:'seasonal', name:'ヨガジャーナル日本版', note:'年4回発行', issues:[
-  {label:'2025年春号 Vol.96', cid:'743dffee6e3a5b8b9a316416f870c53321b4c329292127493fc9556e3de4e227'},
-]},
-
-{type:'seasonal', name:'初めてのひよこクラブ', note:'季刊（春夏秋冬）', issues:[
-  {label:'2026年冬号', cid:'74b8416748292b2d66605d273032fc2bac101a55a9e8212f7c5280e1d0194d1c'},
-  {label:'2025年冬号', cid:'5c7b0872671b9e1429524cb5a8be0755865dc843e11503d622143e6ec8fed11b'},
-]},
-
-{type:'seasonal', name:'初めてのたまごクラブ', note:'季刊（春夏秋冬）', issues:[
-  {label:'直近号', cid:'c236cd05fc55f8bdb60bf509d2f6663983eaf8008502d180799f3e2e3a5fc17e'},
-]},
-
-// ──────────────────────────────────────────────
-//  ムック / 単発
-// ──────────────────────────────────────────────
-{type:'mook', name:'新NISA完全ガイド（ダイヤモンドZAi）', issues:[
-  {label:'最新号', cid:'80dc5a653bf29205572a7eb74f198bf0a83cab054f1ccc4a41196dfe0bdbc489'},
-]},
-{type:'mook', name:'投資信託完全ガイド', issues:[
-  {label:'最新号', cid:'8d84d83d54e1fd968556a497ab8002bb1b4fdf21d696dcef643fac7c9ab595c7'},
-]},
-{type:'mook', name:'米国株完全ガイド', issues:[
-  {label:'最新号', cid:'bfcb85a9227f8e351265524d96101b0d5307a07715dc18905f7b7c4492ed35dc'},
-]},
-{type:'mook', name:'名医が教えるシリーズ', note:'不定期', issues:[
-  {label:'最新刊①', cid:'4741b467466c071b219abf4fa81d8a357aae0cab168619f0016fd58cb687ed53'},
-  {label:'最新刊②', cid:'9039f062dd74d14380043548274deccfa60f260f8d96b68d3bc690fa7f4b585e'},
-]},
-{type:'mook', name:'ネコDK デラックス', note:'年1回程度', issues:[
-  {label:'2025年版', cid:'09073b6ffea32d4cdada7e83c2558a757cb7e4a9aace17ce30786ace52d6f9e3'},
-]},
-{type:'mook', name:'コストコ the Best', note:'年1回程度', issues:[
-  {label:'2024年版', cid:'1a66f1541c1b7a5e44776a60c5323684c64f2bcd002528ec4a3873af7b3850a2'},
-]},
-{type:'mook', name:'カルディ the Best', note:'年1回程度', issues:[
-  {label:'最新版', cid:'56bdad7f562af4a37c83b6f1a9467241c95452df6f4b4a8ed3a43ce7ba91bd52'},
-]},
-{type:'mook', name:'家電批評 安くて良い家電 the BEST', issues:[
-  {label:'2026年版', cid:'d63385b1c0cb1166b1c6fc64b03afb40b285c36eb35746d28a63a218993908ed'},
-]},
-{type:'mook', name:'家電批評 ランキング the Best', issues:[
-  {label:'2026年版', cid:'15e2029c40137fdb253f74615b97e79dbe02c06e9654e0107dd8b12172c52f1c'},
-]},
-{type:'mook', name:'MONOQLO 最強コスパ良品大全', issues:[
-  {label:'2026年版', cid:'5806f5dc18d225d8b4fb5817c9cf32c1b5e8f9a97a4db53b41865a32c4b20526'},
-]},
-{type:'mook', name:'TEST the BEST（LDK）', issues:[
-  {label:'2026年版', cid:'f49ac34b531108ee6878399d0d790615a37bb0ed8bfe178c32013c50893937d0'},
-]},
-{type:'mook', name:'LDKベストバイランキング', issues:[
-  {label:'2026年版', cid:'0921ef273fd5404f7b1631a0a023d72f69fa200e7d7620637ca78a40fc0b26ee'},
-]},
-{type:'mook', name:'LDK業務スーパー the Best', issues:[
-  {label:'2026年版', cid:'a92afdf7b6981bc08d5e97b4b6758a6a83e170b776dbf535cf3c5e3ae906c81b'},
-]},
-{type:'mook', name:'LDK 無印良品・IKEA・ニトリ the Best', issues:[
-  {label:'最新版', cid:'1c4005cf5bfd9f510eb7d154cd7d4347a6ca52fc0d4be737dfede3d5ae523b5c'},
-]},
-{type:'mook', name:'LDK 100均 the BEST', issues:[
-  {label:'2024-2025年版', cid:'3a0fb9208ebec5bf6c6da7c64e8abc2a5c3ba62085dd40a39f28341989de2d46'},
-]},
-{type:'mook', name:'LDK 3COINS', issues:[
-  {label:'最新版', cid:'862db8795f715f5d03f6789502065ca0cc94196bf0e71cbeaddb7e2d0a475134'},
-]},
-{type:'mook', name:'LDK ベビー用品完全ガイド', issues:[
-  {label:'2026年版', cid:'5e09735a7bf3d6738fa8987499f42911118678b405f2e3f08d8e6bae6594d2b6'},
-]},
-];
-
-// ─── レンダリング ────────────────────────────
-const LBL = {monthly:'月刊', seasonal:'季刊/不定期', mook:'ムック'};
-
-function mkIcons(){ return `<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`; }
-
-function mkBody(m){
-  const rows = m.issues.map(iss=>{
-    const fullUrl = iUrl(iss.cid);
-    const short = '/item/' + iss.cid.slice(0,10) + '…/1000/';
-    return `<tr>
-      <td class="td-iss">${iss.label}</td>
-      <td class="td-url"><a href="${fullUrl}" target="_blank" title="${fullUrl}">${short}</a></td>
-      <td style="white-space:nowrap">
-        <a class="btn-v" href="${vUrl(iss.cid)}" target="_blank">${mkIcons()}今すぐ読む</a>
-      </td>
-    </tr>`;
-  }).join('');
-  return `<div class="body-in"><table>
-    <thead><tr>
-      <th>号数</th>
-      <th>📎 ItemページURL（クリックで開く）</th>
-      <th>ビューアを開く</th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-  </table></div>`;
-}
-
-function mkItem(m){
-  const cnt = m.issues.length;
-  const note = m.note ? `<span class="acc-note">— ${m.note}</span>` : '';
-  const searchUrl = gUrl(m.name);
-  return `<div class="acc-item" data-type="${m.type}" data-name="${m.name.toLowerCase()}">
-    <button class="acc-hdr" onclick="tog(this)">
-      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
-      <span class="acc-name">${m.name}</span>
-      ${note}
-      <span class="badge ${m.type}">${LBL[m.type]}</span>
-      <span class="ic">${cnt}件</span>
-      <a class="btn-search" href="${searchUrl}" target="_blank" onclick="event.stopPropagation()">🔍 最新号</a>
-    </button>
-    <div class="acc-body">${mkBody(m)}</div>
-  </div>`;
-}
-
-function render(){
-  const secs = [
-    {label:'月刊誌', f: d=>d.type==='monthly'},
-    {label:'季刊・不定期刊', f: d=>d.type==='seasonal'},
-    {label:'ムック・特別号（単発）', f: d=>d.type==='mook'},
-  ];
-  document.getElementById('mc').innerHTML = secs.map(s=>`
-    <div class="sec-lbl">${s.label}</div>
-    <div class="acc-list">${DATA.filter(s.f).map(mkItem).join('')}</div>`).join('');
-  upd();
-}
-
-// ─── アコーディオン（スライド）───────────────
-function tog(btn){
-  const item = btn.closest('.acc-item');
-  const body = item.querySelector('.acc-body');
-  const isOpen = item.classList.contains('open');
-  if(isOpen){
-    body.style.height = body.scrollHeight+'px';
-    item.classList.remove('open');
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{body.style.height='0';}));
-  } else {
-    item.classList.add('open');
-    body.style.height = body.scrollHeight+'px';
-    body.addEventListener('transitionend', function h(){
-      if(item.classList.contains('open')) body.style.height='auto';
-      body.removeEventListener('transitionend',h);
-    });
-  }
-}
-
-// ─── フィルター ──────────────────────────────
-let cur='all';
-function sf(t,btn){
-  cur=t;
-  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  fil();
-}
-function fil(){
-  const q = document.getElementById('si').value.toLowerCase().trim();
-  let n=0;
-  document.querySelectorAll('.acc-item').forEach(el=>{
-    const ok = (cur==='all'||el.dataset.type===cur) && (!q||el.dataset.name.includes(q));
-    el.classList.toggle('hidden',!ok);
-    if(ok) n++;
-  });
-  upd(n);
-}
-function upd(n){
-  if(n===undefined) n=document.querySelectorAll('.acc-item:not(.hidden)').length;
-  document.getElementById('cl').textContent=n+' 件表示中';
-}
-
-render();
-</script>
-
-<!-- NOTICE -->
-<div class="main">
-  <div class="notice">
-    📎 <strong>ItemページURLについて</strong>（ご質問への回答）<br>
-    各行の「<strong>📎 ItemページURL（クリックで開く）</strong>」列が Item/MediaページのURLです。クリックするとアイテムページが開きます。<br><br>
-    🔍 <strong>更新機能について</strong><br>
-    各雑誌のヘッダー右端にある「<strong>🔍 最新号</strong>」ボタンを押すと、Googleでその雑誌の最新号を検索できます。新しい号が出たときにご利用ください。<br><br>
-    ⚠️ <strong>ご注意</strong>：「今すぐ読む」はdマガジンへの<strong>ログイン済み・有効な契約</strong>が必要です。<br>
-    ⚠️ <strong>ダイヤモンドZAi 2026年4・5月号</strong>はGoogle検索インデックスに収録されておらず取得できませんでした（「🔍 最新号」ボタンでご確認ください）。<br>
-    ⚠️ <strong>いぬのきもち・ねこのきもち</strong>の一部月号も同様に未収録のため欠けています。
+  <div class="tbr">
+    <button class="bet" id="et" onclick="toggleEdit()">✏️ 編集</button>
+    <button class="bex" onclick="exportHTML()">💾 HTMLエクスポート</button>
   </div>
 </div>
+<div class="main" id="mc"></div>
+<div class="mo" id="cm">
+  <div class="mbox"><h3>削除の確認</h3><p id="cmsg"></p>
+    <div class="mbtns">
+      <button class="bcanc" onclick="closeM()">キャンセル</button>
+      <button class="bok" style="background:#ef4444" onclick="doConfirm()">削除</button>
+    </div>
+  </div>
+</div>
+<script>
+// ══════════════════════════════════════════════
+//  DATA — 配信中号のみ（2026-04-25時点）
+//  各号の配信終了日を確認し、終了済みは除外
+// ══════════════════════════════════════════════
+const DD = [
 
+// ── 月刊誌 ─────────────────────────────────────────────────────────────────
+
+// ZAi: 2ヶ月配信窓
+{t:'monthly',n:'ダイヤモンドZAi',i:[
+  {l:'2026年6月号', c:'6183f6dbe74294cbb1d92f7b6fcc32257e4c374b70f699e9156265787bf33c3e'}, // 終了06/19
+  {l:'2026年5月号 ※Mediaページ', m:'32fb84fc7a58ee2b93c8570f4e3aa1062100bcc8ac10cd2927ae24bbfd234ad9'}, // 終了05/21
+]},
+
+// LDK: 1年配信窓
+{t:'monthly',n:'LDK',i:[
+  {l:'2026年5月号', c:'f5ac757e56c94f951d19dfae7bc3faad7ceeaf1d6cce091d962e478cfeef3823'},
+  {l:'2026年4月号', c:'57e851a643425e687f703a6e3dd65d479ba8a03be51a2e27f711fb95a4412a2e'},
+  {l:'2026年3月号', c:'14265f0413f78651177ca6fd3b7c2f84d634f6f3fb3307b29adb70698ec923b5'},
+  {l:'2026年2月号', c:'8fcbea5e2b623e5410b0ae08371ef0dacc0c1692a8c6c0ea8d2614a06dbe65bf'},
+  {l:'2026年1月号', c:'caa90561db72c8c908066790c45eb4fc7d6d9753391f3514bd3b30b853dd7ccc'},
+  {l:'2025年12月号', c:'1880ac3f4fb99c2e1d72debb86b358f8fed194dd426088fe0d94f8c76fe50e4c'}, // 終了2026/10/27
+  {l:'2025年11月号', c:'2fca4ed35a18d2dec0e0572c414d9b0f05fce2d0c99ca600dbff31a14522cb38'}, // 終了2026/09
+  {l:'2025年7月号',  c:'4803225ddce056c6b47ab33ed2b2dda4e8bdf357c9faa2b6d3de63150c76ec27'}, // 終了2026/05/27
+]},
+
+// LDK the Beauty: 1年配信窓
+{t:'monthly',n:'LDK the Beauty',i:[
+  {l:'2026年6月号', c:'51a9c221b6a452a8fd49e6da8cfb449fa4bf5a73178bed3285c458cc9b80db55'},
+  {l:'2026年5月号', c:'542c73fd1e47030a097c2302ee125728ce7bf5ab93575c8884d2311c4fede7f3'},
+  {l:'2026年4月号', c:'42ec6d1d40e0de133b9f08c1bd5601d49b72a66191c509317c58d5a6749f8e55'},
+  {l:'2026年3月号', c:'56a36dddd7016e31a4b5b0625319e9b63e51f51559a64c262e3ebb79c90deaee'},
+  {l:'2026年2月号', c:'a01110ecfa52476203b66c840953112f0723c0ef68a16d9470640246a28faa8d'},
+  {l:'2026年1月号', c:'e91321f23652f8beffd2cc0c331c9ddf3f5cfed7c0274d9db0fa60d2ecf24425'}, // 終了2026/11
+  {l:'2025年8月号',  c:'3f32db4dc867294a8737f197b88c447fe3de9079a26a1917d2be81e7759e53ec'}, // 終了2026/06/21
+]},
+
+// MONOQLO: 1年配信窓
+{t:'monthly',n:'MONOQLO',i:[
+  {l:'2026年4月号', c:'bccd6f12a3dd589bd1d2aa5f2e14f02b81125fcddf9c7db2e3048ed0a040c4c3'},
+  {l:'2026年3月号', c:'5f4c9fdc114721c05fc19a29a8eadc154e16382ff667a1058a380c50890c38ae'},
+  {l:'2026年2月号', c:'c7edc0b3eabb61189a8646579006cc8e21fe90cd332f346c0e3bf3bb6a369841'},
+  {l:'2026年1月号', c:'69ce429669268d95196a4c13599cf4e9aad2f428da1ace206b94bf4921b3764b'},
+  {l:'2025年12月号', c:'92a66344e58a031a6d270db31a060aafa358571eaf22fc98888398bc70e683e2'}, // 終了2026/10/17
+  {l:'2025年9月号',  c:'3f0c58d389844450501852269f939ff4c63242dd51ff898f4f87b5d872864542'}, // 終了2026/07/16
+  {l:'2025年8月号',  c:'b909e1cfbec45eb2e98aa4bf544393f7e0cafeee4d8a10dad530860f2b3fecd2'}, // 終了2026/06/18
+]},
+
+// 家電批評: 1年配信窓
+{t:'monthly',n:'家電批評',i:[
+  {l:'2026年5月号', c:'887050f0f44e54d8c5c0ddf931c105ba4097931b8de51a43bf5aa761a3b7dbbd'},
+  {l:'2026年4月号', c:'b13b2388b8eb0be2829865566af0e3813ee7f8b1c336938f40b5f69951a7313b'},
+  {l:'2026年3月号', c:'4c5cbc79f512c4b55c2bc58607b2a8d74630ae09102268fea5a0d1982dca1252'},
+  {l:'2026年2月号', c:'ae95551b68c39e74c46054521544ea3f22c8180383328eacc8b7340f899ae8e1'},
+  {l:'2026年1月号', c:'c7595ee61def8343e257522ae656a2e587ed02e92e210f29628ebcde459a78a9'},
+  {l:'2025年12月号', c:'2183efbb23ea7c561649d5dffa5269960862028f0e4d4a1b900f18b98c3b46b2'},
+  {l:'2025年11月号', c:'896b08e675b8b9a8c178c4f6c4690be5e05d9b704642d711fb18361391c91519'}, // 終了2026/10/02
+  {l:'2025年10月号', c:'b57e401596c73184457eaed0202dd7bb7688a323a041fcf43a62c9c97ef94f4a'}, // 終了2026/09/02
+  {l:'2025年8月号',  c:'e2cf5f9a3ead6f0de94d6d92020f0ea4476ad3772fad065a5edbe75bc46cc4fe'}, // 終了2026/07/02
+  {l:'2025年7月号',  c:'65271d59b5f19534211879b30fe3ed24dec7fbd47518d8f489a4f6fc952c068b'}, // 終了2026/06/02
+  {l:'2025年6月号',  c:'4e3f6d7f4bf95276cdf5729f9ca6d413230dacbf9889ad314c3b88190514e1fb'}, // 終了2026/05/01 ← まだ配信中
+]},
+
+// いぬのきもち: 3ヶ月配信窓
+{t:'monthly',n:'いぬのきもち',i:[
+  {l:'2026年5月号', c:'43e75af9a569281db78c9b0e464d626dabb6ef20ab10e791f445c1c82823113b'}, // 終了07/14
+]},
+
+// ねこのきもち: 3ヶ月配信窓
+{t:'monthly',n:'ねこのきもち',i:[
+  {l:'2026年5月号', c:'d8842ab7560d4599f50755785bcdc8644bc46efa03a4322f4a2f0f9e818a468e'}, // 終了07/14
+]},
+
+// NHK きょうの健康: 2ヶ月配信窓 ← item URL未取得（🔍 で検索してください）
+{t:'monthly',n:'NHK きょうの健康',i:[]},
+
+// からだにいいこと: ← item URL未取得（🔍 で検索してください）
+{t:'monthly',n:'からだにいいこと',i:[]},
+
+// Tarzan: 3ヶ月配信窓
+{t:'monthly',n:'Tarzan',i:[
+  {l:'2026年5月14日号 No.924', c:'174bfe94e6e1b79d6ed3ff390f0839fc515a3d4b864bd4639395066f2216a55e'}, // 終了07/22
+  {l:'2026年3月12日号 No.920', c:'9b5cc0156d701a5b376b1c55b17086d28cfe5d0b58cb9ac55b7e6e67afffb95e'}, // 終了05/27
+  {l:'2026年2月26日号 No.919', c:'6f80c853ce1dcaf9be4aa9171410f547d2e7e80548be9545d3a573e2f26d39da'}, // 終了05/13
+]},
+
+// Woman's SHAPE & Sports: 季刊
+{t:'monthly',n:"Woman's SHAPE & Sports",note:'年4回',i:[
+  {l:'Vol.30', c:'98dcacab42e41b99c06e97dd3394f7ad274233c28a14444f79fc8fe6dcdef631'},
+]},
+
+// レタスクラブ: 1年配信窓
+{t:'monthly',n:'レタスクラブ',i:[
+  {l:'2026年5月号', c:'1475e7faf63ed1fc74e3209d225b3ebb508e6b169b3d88513add2252012902ee'},
+  {l:'2026年4月号', c:'da8e6db518b9f7bd63f8589d08f24b8912686143e07b903e69e25c1e4152c972'},
+  {l:'2026年3月号', c:'f11fe343d65aa7462d07579644aba146e4dd1858859ef0c04e2da9d1e8fac527'},
+  {l:'2026年1月号', c:'6f2aff7b41255474e3479a1049061b013f18cb40820a905c99905fb7344fb772'}, // 終了2026/12
+  {l:'2025年11月増刊号', c:'f173111a83e8c4d5b489277c37af8878f08acd2288170a06ae16a0aa4f1642c0'}, // 終了2026/10/23
+  {l:'2025年10・11月合併号', c:'c306e400d7d30243427812b070804792d8f292d7389fcd90625fadda93974b4d'}, // 終了2026/10
+  {l:'2025年9月号', c:'6afba5cd336b899273523d8d0e2371942edbeb27113a5fb7e6bd94d2604968a6'}, // 終了2026/08/24
+  {l:'2025年8月号', c:'5795ce2767e032458723ca130c04d30e296e44ccc1f620ac9ae81bce12cbe458'}, // 終了2026/07/24
+  {l:'2025年7月号', c:'c3cf9858a2ec971a7bfd4d8d2483333034e90bce7547f9aec6cb00420e101b25'}, // 終了2026/06/25
+  {l:'2025年6月号', c:'551c46820edf84e5592d922d43fcafb9df8dc574040deff51a50fdb5658b82f7'}, // 終了2026/05/28
+]},
+
+// サンキュ！: 6ヶ月配信窓
+{t:'monthly',n:'サンキュ！',i:[
+  {l:'2026年5月号 ※Mediaページ', m:'39ff0dafce3f8145cc30e5b2a13f7326e9a3e128ad102305336589b54f57da47'}, // 配信中
+  {l:'2026年1月号', c:'d25b2ba3a401ddf719e0f0b57bd8055c88e8955350890d3b358c6a96f9d2dac3'}, // 終了2026/05/24
+]},
+
+// ESSE: 3ヶ月配信窓
+{t:'monthly',n:'ESSE',i:[
+  {l:'2026年4月号', c:'6101d7c418942ce4e3b74395a79f34519589a5c6c0a379588d0f8e50edd33f00'}, // 終了2026/06/02
+]},
+
+// GetNavi: 1年配信窓
+{t:'monthly',n:'GetNavi',i:[
+  {l:'2026年6・7月号', c:'fe4f7ad5358098a3c3aab6ad1c55e870bed7f6c10bf95ebca46ff1f4ee5d7c2f'},
+  {l:'2026年4月号',   c:'786091af886e7cde09860f4d7f68003a06b2ebffe7159c03a37f608e4d49310d'},
+  {l:'2026年1月号',   c:'d6fe6e15524c478d5d84441c5aa7df87bfb409a1a07b09c510e6e792fef3749c'}, // 終了2026/10
+]},
+
+// 日経トレンディ: 2ヶ月配信窓
+{t:'monthly',n:'日経トレンディ',i:[
+  {l:'2026年5月号', c:'590415596d7b657c213a8d3f4dc45a82da93dbbda93c0224da4b4c3f34410d6d'}, // 終了2026/05/25
+]},
+
+// GoodsPress: 1年配信窓
+{t:'monthly',n:'GoodsPress（月刊）',i:[
+  {l:'2026年3月号', c:'1cf989910e067caf236beb48553dce70eeacd206b840acc641883e3493b01f45'}, // 終了2027/02
+  {l:'2025年8・9月合併号', c:'d79d2290badbe5440b53eb0751f6df0f6a3a4f812af3d2b5f03d8129110a780d'}, // 終了2026/07/04
+]},
+
+// ── 季刊/不定期 ─────────────────────────────────────────────────────────────
+
+{t:'seasonal',n:'ヨガジャーナル日本版',note:'年4回',i:[
+  {l:'2026年春号 Vol.100 ※Mediaページ', m:'ce9835654ce0775ebb473231562cf0475a3900b80fad895d33daecc6bf34207d'},
+]},
+
+{t:'seasonal',n:'初めてのひよこクラブ',note:'季刊',i:[
+  {l:'2026年冬号', c:'74b8416748292b2d66605d273032fc2bac101a55a9e8212f7c5280e1d0194d1c'}, // 終了~2026/06
+]},
+
+{t:'seasonal',n:'初めてのたまごクラブ',note:'季刊',i:[
+  {l:'直近号', c:'c236cd05fc55f8bdb60bf509d2f6663983eaf8008502d180799f3e2e3a5fc17e'},
+]},
+
+// ── ムック/単発（配信期間3年以上のため全保持） ──────────────────────────────
+
+{t:'mook',n:'新NISA完全ガイド（ダイヤモンドZAi）',i:[{l:'最新号',c:'80dc5a653bf29205572a7eb74f198bf0a83cab054f1ccc4a41196dfe0bdbc489'}]},
+{t:'mook',n:'投資信託完全ガイド',i:[{l:'最新号',c:'8d84d83d54e1fd968556a497ab8002bb1b4fdf21d696dcef643fac7c9ab595c7'}]},
+{t:'mook',n:'米国株完全ガイド',i:[{l:'最新号',c:'bfcb85a9227f8e351265524d96101b0d5307a07715dc18905f7b7c4492ed35dc'}]},
+{t:'mook',n:'名医が教えるシリーズ',note:'不定期',i:[
+  {l:'最新刊①',c:'4741b467466c071b219abf4fa81d8a357aae0cab168619f0016fd58cb687ed53'},
+  {l:'最新刊②',c:'9039f062dd74d14380043548274deccfa60f260f8d96b68d3bc690fa7f4b585e'},
+]},
+{t:'mook',n:'ネコDK デラックス',note:'年1回',i:[{l:'2025年版',c:'09073b6ffea32d4cdada7e83c2558a757cb7e4a9aace17ce30786ace52d6f9e3'}]},
+{t:'mook',n:'コストコ the Best',note:'年1回',i:[{l:'2024年版',c:'1a66f1541c1b7a5e44776a60c5323684c64f2bcd002528ec4a3873af7b3850a2'}]},
+{t:'mook',n:'カルディ the Best',note:'年1回',i:[{l:'最新版',c:'56bdad7f562af4a37c83b6f1a9467241c95452df6f4b4a8ed3a43ce7ba91bd52'}]},
+{t:'mook',n:'家電批評 安くて良い家電 the BEST',i:[
+  {l:'2026年版',c:'d63385b1c0cb1166b1c6fc64b03afb40b285c36eb35746d28a63a218993908ed'},
+  {l:'2025年版',c:'962c082e003cc22de319f477737ae5ddc295d66f96798e47fc394ab6a3fdae2e'},
+]},
+{t:'mook',n:'家電批評 ランキング the Best',i:[{l:'2026年版',c:'15e2029c40137fdb253f74615b97e79dbe02c06e9654e0107dd8b12172c52f1c'}]},
+{t:'mook',n:'MONOQLO 最強コスパ良品大全',i:[{l:'2026年版',c:'5806f5dc18d225d8b4fb5817c9cf32c1b5e8f9a97a4db53b41865a32c4b20526'}]},
+{t:'mook',n:'MONOQLO アマゾン最強ベストバイ',i:[{l:'2025年版',c:'014fd86436e1167c2df66f7c7ea9558ee51dcfbdccea9c250b2621a4c1da2fbe'}]},
+{t:'mook',n:'MONOQLO the Best 2025-2026',i:[{l:'2025～2026',c:'76397fcf1afa6746a34c0e4eefe44b090b967030329410c6795612b9f1d8c302'}]},
+{t:'mook',n:'TEST the BEST（LDK）',i:[{l:'2026年版',c:'f49ac34b531108ee6878399d0d790615a37bb0ed8bfe178c32013c50893937d0'}]},
+{t:'mook',n:'LDK the Beautyベストコスメランキング2026',i:[{l:'2026年版',c:'690934c4204ef7af5dc51a5467aab4eaf19d0afe1920118d9599244ecdb7956a'}]},
+{t:'mook',n:'LDKベストバイランキング',i:[{l:'2026年版',c:'0921ef273fd5404f7b1631a0a023d72f69fa200e7d7620637ca78a40fc0b26ee'}]},
+{t:'mook',n:'LDK業務スーパー the Best',i:[{l:'2026年版',c:'a92afdf7b6981bc08d5e97b4b6758a6a83e170b776dbf535cf3c5e3ae906c81b'}]},
+{t:'mook',n:'LDK 無印良品・IKEA・ニトリ the Best',i:[{l:'最新版',c:'1c4005cf5bfd9f510eb7d154cd7d4347a6ca52fc0d4be737dfede3d5ae523b5c'}]},
+{t:'mook',n:'LDK 100均 the BEST',i:[{l:'2024-2025年版',c:'3a0fb9208ebec5bf6c6da7c64e8abc2a5c3ba62085dd40a39f28341989de2d46'}]},
+{t:'mook',n:'LDK 3COINS',i:[{l:'最新版',c:'862db8795f715f5d03f6789502065ca0cc94196bf0e71cbeaddb7e2d0a475134'}]},
+{t:'mook',n:'LDK ベビー用品完全ガイド',i:[{l:'2026年版',c:'5e09735a7bf3d6738fa8987499f42911118678b405f2e3f08d8e6bae6594d2b6'}]},
+];
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+const SK='dmag_v3';
+let DATA=load(),eMode=false,cur='all',pcb=null;
+const opened=new Set();
+function load(){try{const s=localStorage.getItem(SK);return s?JSON.parse(s):JSON.parse(JSON.stringify(DD));}catch{return JSON.parse(JSON.stringify(DD));}}
+function save(){localStorage.setItem(SK,JSON.stringify(DATA));document.getElementById('ul').textContent='更新: '+new Date().toLocaleDateString('ja-JP');}
+function resetData(){if(!confirm('初期データに戻しますか？'))return;DATA=JSON.parse(JSON.stringify(DD));localStorage.removeItem(SK);render();}
+
+// ══════════════════════════════════════════════
+//  URL HELPERS
+// ══════════════════════════════════════════════
+const B='https://dmagazine.docomo.ne.jp';
+const vU=c=>`${B}/view/?cid=${c}&cti=&cc=1000&return_url=%2Fitem%2F${c}%2F1000%2F`;
+const iU=c=>`${B}/item/${c}/1000/`;
+const mU=h=>`${B}/media/${h}/`;
+const gU=n=>`https://www.google.com/search?q=site:dmagazine.docomo.ne.jp+${encodeURIComponent(n)}`;
+const ICO=`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+const LBL={monthly:'月刊',seasonal:'季刊/不定期',mook:'ムック'};
+
+// ══════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════
+function mkRow(iss,mi,ii){
+  const del=eMode?`<button class="drbtn" onclick="delI(${mi},${ii})">✕</button> `:'';
+  if(iss.m){const u=mU(iss.m),sh='/media/'+iss.m.slice(0,10)+'…/';return `<tr><td class="ti">${iss.l}<span class="tmedia">Media</span></td><td class="tu"><a href="${u}" class="ml" target="_blank">${sh}</a></td><td>${del}<a class="bmo" href="${u}" target="_blank">${ICO}Mediaページ</a></td></tr>`;}
+  const u=iU(iss.c),sh='/item/'+iss.c.slice(0,10)+'…/1000/';
+  return `<tr><td class="ti">${iss.l}</td><td class="tu"><a href="${u}" target="_blank">${sh}</a></td><td>${del}<a class="bv" href="${vU(iss.c)}" target="_blank">${ICO}今すぐ読む</a></td></tr>`;
+}
+function mkAddRow(mi){return `<tr class="air"><td colspan="3"><div class="aif"><input class="il" id="l${mi}" type="text" placeholder="例: 2026年7月号"><input class="ic2" id="c${mi}" type="text" placeholder="cid または mediaHash"><label><input type="checkbox" id="im${mi}"> Mediaページ</label><button class="bai" onclick="addI(${mi})">＋ 追加</button></div></td></tr>`;}
+function mkBody(m,mi){
+  if(m.i.length===0){
+    return `<div class="bin"><div class="empty-state">配信中の号のItem URLが未取得です。<br>「🔍 最新号を検索」ボタンで最新号のURLを確認し、編集モードで追加してください。</div></div>`;
+  }
+  const rows=m.i.map((iss,ii)=>mkRow(iss,mi,ii)).join('');
+  return `<div class="bin"><table><thead><tr><th>号数</th><th>📎 Item/MediaページURL（クリックで開く）</th><th>${eMode?'操作':'ビューアを開く'}</th></tr></thead><tbody>${rows}${mkAddRow(mi)}</tbody></table></div>`;
+}
+function mkItem(m,mi){
+  const note=m.note?`<span class="nt">— ${m.note}</span>`:'';
+  const isO=opened.has(m.n);
+  const cnt=m.i.length;
+  const cntEl=cnt===0?`<span class="ic0">URL未取得</span>`:`<span class="ic">${cnt}件</span>`;
+  return `<div class="ai${eMode?' eon':''}${isO?' open':''}" data-t="${m.t}" data-n="${m.n.toLowerCase()}" id="ai${mi}">
+    <button class="ah" onclick="tog(this)">
+      <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+      <span class="an">${m.n}</span>${note}<span class="bdg ${m.t}">${LBL[m.t]}</span>${cntEl}
+      <a class="bsrch" href="${gU(m.n)}" target="_blank" onclick="event.stopPropagation()">🔍 最新号を検索</a>
+    </button>
+    <div class="ab"${isO?' style="height:auto"':''}>${mkBody(m,mi)}</div>
+  </div>`;
+}
+function render(){
+  const secs=[{l:'月刊誌',t:'monthly'},{l:'季刊・不定期刊',t:'seasonal'},{l:'ムック・特別号（単発）',t:'mook'}];
+  document.getElementById('mc').innerHTML=secs.map(s=>`<div class="slbl">${s.l}</div><div class="alist">${DATA.map((m,i)=>m.t===s.t?mkItem(m,i):'').join('')}</div>`).join('');
+  fil();
+}
+
+// ══════════════════════════════════════════════
+//  ACCORDION
+// ══════════════════════════════════════════════
+function tog(btn){
+  const item=btn.closest('.ai'),body=item.querySelector('.ab'),name=item.querySelector('.an').textContent;
+  const isO=item.classList.contains('open');
+  if(isO){body.style.height=body.scrollHeight+'px';item.classList.remove('open');opened.delete(name);requestAnimationFrame(()=>requestAnimationFrame(()=>{body.style.height='0';}));}
+  else{item.classList.add('open');opened.add(name);body.style.height=body.scrollHeight+'px';body.addEventListener('transitionend',function h(){if(item.classList.contains('open'))body.style.height='auto';body.removeEventListener('transitionend',h);});}
+}
+
+// ══════════════════════════════════════════════
+//  FILTER
+// ══════════════════════════════════════════════
+function sf(t,btn){cur=t;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');fil();}
+function fil(){const q=document.getElementById('si').value.toLowerCase().trim();let n=0;document.querySelectorAll('.ai').forEach(el=>{const ok=(cur==='all'||el.dataset.t===cur)&&(!q||el.dataset.n.includes(q));el.classList.toggle('hidden',!ok);if(ok)n++;});document.getElementById('cl').textContent=n+' 件表示中';}
+
+// ══════════════════════════════════════════════
+//  EDIT
+// ══════════════════════════════════════════════
+function toggleEdit(){eMode=!eMode;const btn=document.getElementById('et'),banner=document.getElementById('eb');btn.classList.toggle('act',eMode);btn.textContent=eMode?'✕ 編集終了':'✏️ 編集';banner.classList.toggle('show',eMode);render();}
+function addI(mi){const l=document.getElementById(`l${mi}`).value.trim(),c=document.getElementById(`c${mi}`).value.trim(),isM=document.getElementById(`im${mi}`).checked;if(!l||!c){alert('号数とcidを入力してください');return;}DATA[mi].i.unshift(isM?{l,m:c}:{l,c});save();render();}
+function delI(mi,ii){const iss=DATA[mi].i[ii];openConf(`「${iss.l}」を削除しますか？`,()=>{DATA[mi].i.splice(ii,1);save();render();});}
+function openConf(msg,cb){document.getElementById('cmsg').textContent=msg;document.getElementById('cm').classList.add('show');pcb=cb;}
+function doConfirm(){if(pcb)pcb();pcb=null;closeM();}
+function closeM(){document.getElementById('cm').classList.remove('show');}
+document.getElementById('cm').addEventListener('click',e=>{if(e.target===document.getElementById('cm'))closeM();});
+
+// ══════════════════════════════════════════════
+//  EXPORT
+// ══════════════════════════════════════════════
+function exportHTML(){
+  const dj=JSON.stringify(DATA,null,2),td=new Date().toISOString().slice(0,10);
+  const src=document.documentElement.outerHTML.replace(/const DD = \[[\s\S]*?\];\n/,`const DD = ${dj};\n`).replace(/更新: [\d\-]+/g,`更新: ${td}`);
+  const b=new Blob([src],{type:'text/html;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='index.html';a.click();URL.revokeObjectURL(a.href);
+}
+render();
+</script>
 </body>
 </html>
