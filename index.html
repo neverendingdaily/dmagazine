@@ -677,3 +677,409 @@ function mkItem(m, mi){
     <div class="ab"${isO?' style="height:auto"':''}>${mkBody(m,mi)}</div>
   </div>`;
 }
+
+function render(){
+  const secs = [
+    {l:'月刊誌', t:'monthly'},
+    {l:'季刊・不定期刊', t:'seasonal'},
+    {l:'ムック・特別号（単発）', t:'mook'},
+  ];
+  document.getElementById('mc').innerHTML = secs.map(s => {
+    const addBtn = `<button class="add-mag-btn${eMode?' show':''}" onclick="openAddMag('${s.t}')">＋ 追加</button>`;
+    const items = DATA.map((m,i) => m.t===s.t ? mkItem(m,i) : '').join('');
+    return `<div class="slbl">${s.l}${addBtn}</div><div class="alist">${items}</div>`;
+  }).join('');
+  fil();
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能1: 既読トグル
+// ════════════════════════════════════════════════════════════════
+function toggleRead(mi, ii){
+  DATA[mi].i[ii].r = !DATA[mi].i[ii].r;
+  save();
+  // 行だけ再描画（全renderを避けてスクロール位置を保持）
+  const item = document.getElementById(`ai${mi}`);
+  const body = item.querySelector('.ab');
+  const wasOpen = item.classList.contains('open');
+  const h = wasOpen ? body.scrollHeight : null;
+  item.querySelector('.bin').outerHTML = mkBody(DATA[mi], mi).replace('<div class="bin">','<div class="bin">');
+  // テーブル部分だけ差し替え
+  const newBin = document.createElement('div');
+  newBin.innerHTML = mkBody(DATA[mi], mi);
+  const oldBin = item.querySelector('.bin');
+  oldBin.replaceWith(newBin.firstChild);
+  if(wasOpen && h){ body.style.height = 'auto'; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能2: ドラッグ＆ドロップ並び替え
+// ════════════════════════════════════════════════════════════════
+function onDragStart(e, mi){
+  dragSrcIdx = mi;
+  e.dataTransfer.effectAllowed = 'move';
+  e.currentTarget.classList.add('dragging');
+}
+function onDragOver(e, mi){
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.ai').forEach(el => el.classList.remove('drag-over'));
+  if(mi !== dragSrcIdx) e.currentTarget.classList.add('drag-over');
+}
+function onDrop(e, mi){
+  e.preventDefault();
+  if(dragSrcIdx === null || dragSrcIdx === mi) return;
+  // DATA 配列内で移動
+  const moved = DATA.splice(dragSrcIdx, 1)[0];
+  const target = mi > dragSrcIdx ? mi - 1 : mi;
+  DATA.splice(target, 0, moved);
+  dragSrcIdx = null;
+  save(); render();
+}
+function onDragEnd(e){
+  dragSrcIdx = null;
+  document.querySelectorAll('.ai').forEach(el => {
+    el.classList.remove('dragging','drag-over');
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能2-B: 号の行ドラッグ＆ドロップ（雑誌内の並び替え）
+// ════════════════════════════════════════════════════════════════
+let dragRowMag = null, dragRowIdx = null;
+
+function onRowDragStart(e, mi, ii){
+  // 雑誌カード全体のドラッグと競合しないよう伝播を止める
+  e.stopPropagation();
+  dragRowMag = mi; dragRowIdx = ii;
+  e.dataTransfer.effectAllowed = 'move';
+  // ドラッグ中の行を半透明に
+  requestAnimationFrame(()=>{ e.currentTarget.classList.add('row-dragging'); });
+}
+function onRowDragOver(e, mi, ii){
+  e.preventDefault(); e.stopPropagation();
+  if(dragRowMag !== mi) return; // 異なる雑誌へのドロップは不可
+  e.dataTransfer.dropEffect = 'move';
+  // ハイライト: 同じテーブル内の全行からクラスを外してから対象だけ付与
+  e.currentTarget.closest('table').querySelectorAll('tr').forEach(r => r.classList.remove('row-drag-over'));
+  if(ii !== dragRowIdx) e.currentTarget.classList.add('row-drag-over');
+}
+function onRowDrop(e, mi, ii){
+  e.preventDefault(); e.stopPropagation();
+  if(dragRowMag === null || dragRowMag !== mi || dragRowIdx === ii) return;
+  // 配列内で移動
+  const moved = DATA[mi].i.splice(dragRowIdx, 1)[0];
+  const target = ii > dragRowIdx ? ii - 1 : ii;
+  DATA[mi].i.splice(target, 0, moved);
+  dragRowMag = null; dragRowIdx = null;
+  save(); render();
+}
+function onRowDragEnd(e){
+  e.stopPropagation();
+  dragRowMag = null; dragRowIdx = null;
+  // クリーンアップ
+  document.querySelectorAll('tr.row-dragging, tr.row-drag-over').forEach(r => {
+    r.classList.remove('row-dragging','row-drag-over');
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能3: 検索（雑誌名 + 号ラベル）
+// ════════════════════════════════════════════════════════════════
+function sf(t, btn){
+  cur = t;
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  fil();
+}
+function fil(){
+  const q = document.getElementById('si').value.toLowerCase().trim();
+  let n = 0;
+  document.querySelectorAll('.ai').forEach(el => {
+    const nameHit = el.dataset.n.includes(q);
+    const labelHit = q ? el.dataset.labels.includes(q) : false;
+    const typeOk = cur==='all'
+      || el.dataset.t===cur
+      || (cur==='fav' && el.querySelector('.fav-btn.on'));
+    const textOk = !q || nameHit || labelHit;
+    const ok = typeOk && textOk;
+    el.classList.toggle('hidden', !ok);
+    if(ok) n++;
+  });
+  document.getElementById('cl').textContent = n + ' 件表示中';
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能4: お気に入り
+// ════════════════════════════════════════════════════════════════
+function toggleFav(mi){
+  DATA[mi].fav = !DATA[mi].fav;
+  save();
+  // ★ボタンだけ更新
+  const item = document.getElementById(`ai${mi}`);
+  const btn = item.querySelector('.fav-btn');
+  const isFav = DATA[mi].fav;
+  btn.className = isFav ? 'fav-btn on' : 'fav-btn off';
+  btn.title = isFav ? 'お気に入り解除' : 'お気に入りに追加';
+  // data-n に fav 情報を埋めないので、フィルターは DOM の .fav-btn.on を参照
+  fil();
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能5: クリップボードデータ同期
+// ════════════════════════════════════════════════════════════════
+function syncCopy(){
+  const json = JSON.stringify(DATA, null, 2);
+  const st = document.getElementById('copy-status');
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(json).then(()=>{
+      st.className='sync-status ok';
+      st.textContent='✅ クリップボードにコピーしました';
+    }).catch(()=>{ syncCopyFallback(json, st); });
+  } else { syncCopyFallback(json, st); }
+}
+function syncCopyFallback(text, st){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{
+    document.execCommand('copy');
+    st.className='sync-status ok'; st.textContent='✅ コピーしました';
+  }catch{
+    st.className='sync-status err'; st.textContent='❌ コピーに失敗しました。テキストを手動でコピーしてください。';
+  }
+  document.body.removeChild(ta);
+}
+function syncImport(){
+  const ta = document.getElementById('sync-import-ta').value.trim();
+  const st = document.getElementById('import-status');
+  if(!ta){ st.className='sync-status err'; st.textContent='❌ JSONを貼り付けてください'; return; }
+  try{
+    const parsed = JSON.parse(ta);
+    if(!Array.isArray(parsed)) throw new Error('配列ではありません');
+    DATA = parsed;
+    save();
+    st.className='sync-status ok';
+    st.textContent='✅ 復元しました。画面を更新します…';
+    setTimeout(()=>{ closeModal('syncModal'); render(); }, 1000);
+  }catch(e){
+    st.className='sync-status err';
+    st.textContent='❌ 無効なJSON: '+e.message;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能6: 古い号の一括整理（パージ）
+// ════════════════════════════════════════════════════════════════
+function purgeMag(mi){
+  const m = DATA[mi];
+  const total = m.i.length;
+  if(total <= 3){
+    alert(`「${m.n}」は${total}件しかないため整理できません（3件以下）。`);
+    return;
+  }
+  const keepStr = prompt(`「${m.n}」には${total}件の号があります。\n最新の何件を残しますか？（3〜${total-1}の数字を入力）`, '3');
+  if(keepStr === null) return;
+  const keep = parseInt(keepStr, 10);
+  if(isNaN(keep) || keep < 1 || keep >= total){
+    alert('1 〜 '+(total-1)+' の数字を入力してください。'); return;
+  }
+  openConfirm(
+    `「${m.n}」の最新${keep}件だけを残し、残り${total-keep}件を削除します。よろしいですか？`,
+    () => { DATA[mi].i = DATA[mi].i.slice(0, keep); save(); render(); }
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+//  ACCORDION
+// ════════════════════════════════════════════════════════════════
+function tog(btn){
+  const item = btn.closest('.ai');
+  const body = item.querySelector('.ab');
+  const name = item.querySelector('.an').textContent;
+  const isO = item.classList.contains('open');
+  if(isO){
+    body.style.height = body.scrollHeight+'px';
+    item.classList.remove('open'); opened.delete(name);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ body.style.height='0'; }));
+  }else{
+    item.classList.add('open'); opened.add(name);
+    body.style.height = body.scrollHeight+'px';
+    body.addEventListener('transitionend', function h(){
+      if(item.classList.contains('open')) body.style.height='auto';
+      body.removeEventListener('transitionend', h);
+    });
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  URL INPUT リアルタイムバリデーション
+// ════════════════════════════════════════════════════════════════
+function onUrlInput(mi){
+  const inp = document.getElementById(`url-${mi}`);
+  const hint = document.getElementById(`hint-${mi}`);
+  const btn = document.getElementById(`addBtn-${mi}`);
+  const raw = inp.value.trim();
+  if(!raw){
+    inp.className='inp-url'; hint.className='url-hint';
+    hint.textContent='Item URL または Media URL をそのまま貼り付けてください';
+    btn.disabled=true; return;
+  }
+  const parsed = parseUrl(raw);
+  if(parsed){
+    inp.className='inp-url ok'; hint.className='url-hint ok';
+    hint.textContent=(parsed.type==='item'?'✅ ItemページURL':'✅ MediaページURL')+` を認識（hash: ${parsed.hash.slice(0,16)}…）`;
+    btn.disabled=false;
+  }else{
+    inp.className='inp-url err'; hint.className='url-hint err';
+    hint.textContent='❌ dmagazine.docomo.ne.jp の /item/ または /media/ URLを入力してください';
+    btn.disabled=true;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  ISSUE 追加 / 削除
+// ════════════════════════════════════════════════════════════════
+function addIssue(mi){
+  const lbl = document.getElementById(`lbl-${mi}`).value.trim();
+  const raw  = document.getElementById(`url-${mi}`).value.trim();
+  if(!lbl){ alert('号数（ラベル）を入力してください'); return; }
+  const parsed = parseUrl(raw);
+  if(!parsed){ alert('URLを正しく認識できませんでした'); return; }
+  const iss = parsed.type==='item' ? {l:lbl, c:parsed.hash} : {l:lbl, m:parsed.hash};
+  DATA[mi].i.unshift(iss);
+  save(); render();
+}
+function delIssue(mi, ii){
+  openConfirm(`「${DATA[mi].i[ii].l}」を削除しますか？`, ()=>{
+    DATA[mi].i.splice(ii,1); save(); render();
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MAGAZINE 追加 / 編集 / 削除
+// ════════════════════════════════════════════════════════════════
+function openAddMag(type){
+  document.getElementById('new-mag-name').value='';
+  document.getElementById('new-mag-type').value=type||'monthly';
+  document.getElementById('new-mag-note').value='';
+  openModal('addMagModal');
+  setTimeout(()=>document.getElementById('new-mag-name').focus(),80);
+}
+function doAddMag(){
+  const name = document.getElementById('new-mag-name').value.trim();
+  const type = document.getElementById('new-mag-type').value;
+  const note = document.getElementById('new-mag-note').value.trim()||undefined;
+  if(!name){ alert('雑誌名を入力してください'); return; }
+  DATA.push({t:type, n:name, note, i:[]});
+  save(); closeModal('addMagModal'); render();
+}
+function openRenameMag(mi){
+  renamingIdx=mi;
+  const m=DATA[mi];
+  document.getElementById('rename-name').value=m.n;
+  document.getElementById('rename-type').value=m.t;
+  document.getElementById('rename-note').value=m.note||'';
+  openModal('renameMagModal');
+  setTimeout(()=>document.getElementById('rename-name').focus(),80);
+}
+function doRenameMag(){
+  if(renamingIdx===null) return;
+  const name=document.getElementById('rename-name').value.trim();
+  if(!name){ alert('雑誌名を入力してください'); return; }
+  DATA[renamingIdx].n=name;
+  DATA[renamingIdx].t=document.getElementById('rename-type').value;
+  const note=document.getElementById('rename-note').value.trim();
+  DATA[renamingIdx].note=note||undefined;
+  renamingIdx=null;
+  save(); closeModal('renameMagModal'); render();
+}
+function deleteMag(mi){
+  openConfirm(`「${DATA[mi].n}」とすべての号を削除しますか？`, ()=>{
+    DATA.splice(mi,1); save(); render();
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  EDIT MODE
+// ════════════════════════════════════════════════════════════════
+function toggleEdit(){
+  eMode=!eMode;
+  const btn=document.getElementById('et'), banner=document.getElementById('eb');
+  btn.classList.toggle('act',eMode);
+  btn.textContent=eMode?'✕ 編集終了':'✏️ 編集';
+  banner.classList.toggle('show',eMode);
+  render();
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MODAL HELPERS
+// ════════════════════════════════════════════════════════════════
+function openModal(id){
+  document.getElementById(id).classList.add('show');
+  // sync modal: reset status
+  if(id==='syncModal'){
+    ['copy-status','import-status'].forEach(s=>{
+      const el=document.getElementById(s);
+      if(el){el.className='sync-status';el.textContent='';}
+    });
+    const ta=document.getElementById('sync-import-ta');
+    if(ta) ta.value='';
+  }
+}
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+function openConfirm(msg, cb, btnLabel='削除する'){
+  document.getElementById('confirm-msg').textContent=msg;
+  document.getElementById('confirm-ok').textContent=btnLabel;
+  openModal('confirmModal'); pendingCb=cb;
+}
+function doConfirm(){ if(pendingCb) pendingCb(); pendingCb=null; closeModal('confirmModal'); }
+
+// overlay click to close
+document.querySelectorAll('.mo').forEach(el=>{
+  el.addEventListener('click', e=>{ if(e.target===el) el.classList.remove('show'); });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  EXPORT HTML
+// ════════════════════════════════════════════════════════════════
+function exportHTML(){
+  const dj = JSON.stringify(DATA, null, 2);
+  const td = new Date().toISOString().slice(0,10);
+
+  // ── 置換戦略 ──────────────────────────────────────────────────
+  // document.documentElement.outerHTML の中で「const DD = [...];」を
+  // 現在の DATA の JSON で上書きする。
+  //
+  // 注意: 末尾に \n を要求する旧パターンは outerHTML の改行コード差異
+  //       (\r\n / \n / 改行なし) でマッチに失敗することがあるため除去。
+  //       "];\n" → "];" のみで照合し、後続の改行は問わない。
+  // ─────────────────────────────────────────────────────────────
+  let src = document.documentElement.outerHTML;
+  const replaced = src.replace(/const DD = \[[\s\S]*?\];/, `const DD = ${dj};`);
+
+  if(replaced === src){
+    // フォールバック: 正規表現がマッチしなかった場合のデバッグ用アラート
+    alert('⚠️ エクスポート警告: データ置換に失敗しました。\n'
+        + '代わりにデータ同期 → コピー を使い、新しいファイルに貼り付けて復元してください。');
+  }
+
+  src = replaced
+    .replace(/更新: [\d\-]+/g, `更新: ${td}`)
+    .replace(/2026-04-25 時点/, `${td} 時点`);
+
+  const b = new Blob([src], {type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(b);
+  a.download = 'index.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ════════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>
