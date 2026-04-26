@@ -6,30 +6,45 @@
 <title>dマガジン 直リンクポータル</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ════════════════════════════════════════
+   CSS VARIABLES & RESET
+════════════════════════════════════════ */
 :root{
   --bg:#f4f6f9;--wh:#fff;--bd:#e2e8f0;--blt:#eef1f6;
   --tx:#1a202c;--mu:#718096;--ac:#2563eb;--alt:#eff6ff;
-  --mg:#dcfce7;--mc:#15803d;--sk:#f3e8ff;--sc:#7e22ce;--sg:#fef9c3;--sgc:#854d0e;
+  --mg:#dcfce7;--mc:#15803d;--sk:#f3e8ff;--sc:#7e22ce;
+  --sg:#fef9c3;--sgc:#854d0e;
   --hdr:#1e293b;--hov:#f0f7ff;
-  --sh:0 1px 3px rgba(0,0,0,.07);--sh2:0 4px 12px rgba(0,0,0,.09);--sh3:0 8px 28px rgba(0,0,0,.16);
+  --sh:0 1px 3px rgba(0,0,0,.07);
+  --sh2:0 4px 12px rgba(0,0,0,.09);
+  --sh3:0 8px 28px rgba(0,0,0,.16);
+  /* read/fav colors */
+  --read-bg:#f8fafc;--read-tx:#b0bec5;
+  --fav-on:#f59e0b;--fav-off:#d1d5db;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;font-size:14px;line-height:1.6;padding-bottom:80px;}
 
-/* ── EDIT BANNER ── */
-.ebanner{display:none;background:#fff7ed;border-bottom:2px solid #f97316;padding:8px 24px;font-size:12px;color:#ea580c;font-weight:600;align-items:center;gap:10px;}
+/* ════════════════════════════════════════
+   EDIT BANNER
+════════════════════════════════════════ */
+.ebanner{display:none;background:#fff7ed;border-bottom:2px solid #f97316;padding:8px 24px;font-size:12px;color:#ea580c;font-weight:600;align-items:center;gap:10px;flex-wrap:wrap;}
 .ebanner.show{display:flex;}
 
-/* ── HEADER ── */
+/* ════════════════════════════════════════
+   HEADER
+════════════════════════════════════════ */
 .hdr{background:var(--hdr);color:#fff;padding:13px 24px;display:flex;align-items:center;gap:12px;}
 .logo{width:33px;height:33px;background:#3b82f6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;flex-shrink:0;}
 .ht h1{font-size:14px;font-weight:700;}
 .ht p{font-size:10px;color:#94a3b8;font-family:'DM Mono',monospace;}
 .hr{margin-left:auto;}
-.upd{font-size:10px;color:#64748b;font-family:'DM Mono',monospace;}
+.upd{font-size:10px;color:#64748b;font-family:'DM Mono',monospace;white-space:nowrap;}
 
-/* ── TOOLBAR ── */
-.tb{background:var(--wh);border-bottom:1px solid var(--bd);padding:8px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:20;box-shadow:var(--sh);}
+/* ════════════════════════════════════════
+   TOOLBAR
+════════════════════════════════════════ */
+.tb{background:var(--wh);border-bottom:1px solid var(--bd);padding:8px 24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;position:sticky;top:0;z-index:20;box-shadow:var(--sh);}
 .sw{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--bd);border-radius:7px;padding:0 8px;flex:1;min-width:120px;max-width:240px;}
 .sw input{background:none;border:none;outline:none;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--tx);padding:6px 0;width:100%;}
 .sw input::placeholder{color:var(--mu);}
@@ -37,15 +52,23 @@ body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;
 .fb{padding:4px 10px;border-radius:20px;border:1px solid var(--bd);background:var(--wh);font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:500;cursor:pointer;color:var(--mu);transition:all .15s;}
 .fb:hover{border-color:var(--ac);color:var(--ac);}
 .fb.on{background:var(--ac);border-color:var(--ac);color:#fff;}
+.fb.fav-tab{color:var(--fav-on);border-color:var(--fav-on);}
+.fb.fav-tab.on{background:var(--fav-on);border-color:var(--fav-on);color:#fff;}
 .cnt{font-size:11px;color:var(--mu);font-family:'DM Mono',monospace;}
-.tbr{margin-left:auto;display:flex;gap:6px;}
-.bet{padding:5px 12px;border-radius:6px;border:1.5px solid var(--bd);background:var(--wh);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:var(--mu);display:flex;align-items:center;gap:5px;transition:all .15s;}
+.tbr{margin-left:auto;display:flex;gap:5px;flex-wrap:wrap;}
+.bet{padding:5px 11px;border-radius:6px;border:1.5px solid var(--bd);background:var(--wh);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:var(--mu);display:flex;align-items:center;gap:4px;transition:all .15s;white-space:nowrap;}
 .bet:hover{border-color:#f97316;color:#f97316;}
 .bet.act{background:#fff7ed;border-color:#f97316;color:#ea580c;}
-.bex{padding:5px 12px;border-radius:6px;border:1.5px solid #10b981;background:#ecfdf5;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:#059669;display:flex;align-items:center;gap:5px;}
+.badd{padding:5px 11px;border-radius:6px;border:1.5px solid var(--ac);background:var(--alt);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:var(--ac);display:flex;align-items:center;gap:4px;white-space:nowrap;}
+.badd:hover{background:#dbeafe;}
+.bex{padding:5px 11px;border-radius:6px;border:1.5px solid #10b981;background:#ecfdf5;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:#059669;display:flex;align-items:center;gap:4px;white-space:nowrap;}
 .bex:hover{background:#d1fae5;}
+.bsync{padding:5px 11px;border-radius:6px;border:1.5px solid #8b5cf6;background:#f5f3ff;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:#7c3aed;display:flex;align-items:center;gap:4px;white-space:nowrap;}
+.bsync:hover{background:#ede9fe;}
 
-/* ── MAIN ── */
+/* ════════════════════════════════════════
+   MAIN / SECTIONS
+════════════════════════════════════════ */
 .main{padding:16px 24px;max-width:1100px;}
 .slbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin:22px 0 8px;display:flex;align-items:center;gap:7px;}
 .slbl::after{content:'';flex:1;height:1px;background:var(--bd);}
@@ -53,80 +76,104 @@ body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif;
 .add-mag-btn.show{display:inline-block;}
 .alist{display:flex;flex-direction:column;gap:5px;}
 
-/* ── ACCORDION ITEM ── */
-.ai{background:var(--wh);border:1px solid var(--bd);border-radius:9px;overflow:hidden;box-shadow:var(--sh);transition:box-shadow .15s;}
+/* ════════════════════════════════════════
+   ACCORDION ITEM
+════════════════════════════════════════ */
+.ai{background:var(--wh);border:1px solid var(--bd);border-radius:9px;overflow:hidden;box-shadow:var(--sh);transition:box-shadow .15s,border-color .15s;}
 .ai:hover{box-shadow:var(--sh2);}
 .ai.hidden{display:none;}
 .ai.eon{border-color:#fed7aa;}
+/* drag states */
+.ai.drag-over{border:2px dashed var(--ac);background:var(--alt);}
+.ai.dragging{opacity:.45;box-shadow:none;}
 
-/* ── ACCORDION HEADER ── */
+/* ════════════════════════════════════════
+   ACCORDION HEADER
+════════════════════════════════════════ */
 .ah{display:flex;align-items:center;gap:7px;padding:10px 13px;cursor:pointer;user-select:none;background:var(--wh);border:none;width:100%;text-align:left;transition:background .12s;}
 .ah:hover{background:#f8fafc;}
 .cv{width:16px;height:16px;flex-shrink:0;color:var(--mu);transition:transform .32s cubic-bezier(.4,0,.2,1);}
 .ai.open .cv{transform:rotate(90deg);}
-.an{font-weight:600;font-size:13px;flex:1;color:var(--tx);}
-.nt{font-size:10px;color:var(--mu);}
-.ic{font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:2px 6px;}
-.ic0{font-size:10px;color:#d97706;font-family:'DM Mono',monospace;background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:2px 6px;}
-
-/* edit controls in header */
-.edit-hdr-btns{display:none;align-items:center;gap:4px;margin-left:2px;}
-.ai.eon .edit-hdr-btns{display:flex;}
-.btn-rename{font-size:10px;background:#eff6ff;border:1px solid #bfdbfe;color:var(--ac);border-radius:4px;padding:2px 7px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;}
-.btn-rename:hover{background:#dbeafe;}
-.btn-del-mag{font-size:10px;background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;border-radius:4px;padding:2px 7px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;}
-.btn-del-mag:hover{background:#fee2e2;}
-
+/* drag handle — edit mode only */
+.drag-handle{display:none;align-items:center;cursor:grab;color:var(--mu);font-size:16px;line-height:1;padding:0 2px;flex-shrink:0;touch-action:none;}
+.drag-handle:active{cursor:grabbing;}
+.ai.eon .drag-handle{display:flex;}
+.an{font-weight:600;font-size:13px;flex:1;color:var(--tx);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nt{font-size:10px;color:var(--mu);white-space:nowrap;}
+/* favorite star */
+.fav-btn{background:none;border:none;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;flex-shrink:0;transition:transform .15s;}
+.fav-btn:hover{transform:scale(1.2);}
+.fav-btn.on{color:var(--fav-on);}
+.fav-btn.off{color:var(--fav-off);}
+/* badges */
+.ic{font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:2px 6px;white-space:nowrap;}
+.ic0{font-size:10px;color:#d97706;font-family:'DM Mono',monospace;background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:2px 6px;white-space:nowrap;}
 .bdg{font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
 .bdg.monthly{background:var(--mg);color:var(--mc);}
 .bdg.mook{background:var(--sk);color:var(--sc);}
 .bdg.seasonal{background:var(--sg);color:var(--sgc);}
+/* search link */
 .bsrch{display:inline-flex;align-items:center;gap:3px;background:#f1f5f9;border:1px solid var(--bd);color:var(--mu);font-size:10px;font-weight:500;padding:2px 7px;border-radius:5px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:all .15s;flex-shrink:0;}
 .bsrch:hover{background:var(--alt);border-color:var(--ac);color:var(--ac);}
+/* edit controls */
+.edit-hdr-btns{display:none;align-items:center;gap:4px;flex-shrink:0;}
+.ai.eon .edit-hdr-btns{display:flex;}
+.btn-rename{font-size:10px;background:#eff6ff;border:1px solid #bfdbfe;color:var(--ac);border-radius:4px;padding:2px 7px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;}
+.btn-rename:hover{background:#dbeafe;}
+.btn-purge{font-size:10px;background:#fef9c3;border:1px solid #fde047;color:#92400e;border-radius:4px;padding:2px 7px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;}
+.btn-purge:hover{background:#fef08a;}
+.btn-del-mag{font-size:10px;background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;border-radius:4px;padding:2px 7px;cursor:pointer;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;}
+.btn-del-mag:hover{background:#fee2e2;}
 
-/* ── ACCORDION BODY ── */
+/* ════════════════════════════════════════
+   ACCORDION BODY / TABLE
+════════════════════════════════════════ */
 .ab{height:0;overflow:hidden;transition:height .35s cubic-bezier(.4,0,.2,1);}
 .bin{border-top:1px solid var(--blt);background:#fafbfd;}
 .empty-state{padding:16px;text-align:center;font-size:12px;color:var(--mu);}
 table{width:100%;border-collapse:collapse;}
 thead th{padding:6px 11px;font-size:10px;font-weight:600;color:var(--mu);text-align:left;background:#f1f5f9;border-bottom:1px solid var(--bd);letter-spacing:.04em;}
-tbody tr{border-bottom:1px solid var(--blt);transition:background .1s;}
+tbody tr{border-bottom:1px solid var(--blt);transition:background .12s;}
 tbody tr:last-child{border-bottom:none;}
 tbody tr:hover{background:var(--hov);}
 td{padding:7px 11px;vertical-align:middle;}
 .ti{font-weight:500;color:var(--tx);font-size:13px;}
+/* read state */
+tr.read-row{background:var(--read-bg);}
+tr.read-row .ti{color:var(--read-tx);text-decoration:line-through;font-weight:400;}
+tr.read-row .tu a{color:#b0bec5;}
+/* url cell */
 .tu a{font-family:'DM Mono',monospace;font-size:10px;color:var(--ac);text-decoration:none;white-space:nowrap;}
 .tu a:hover{text-decoration:underline;}
 .tu a.ml{color:#d97706;}
+/* action buttons */
 .bv{display:inline-flex;align-items:center;gap:3px;background:var(--ac);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;text-decoration:none;white-space:nowrap;transition:opacity .15s,transform .1s;}
 .bv:hover{opacity:.85;transform:translateY(-1px);}
 .bmo{display:inline-flex;align-items:center;gap:3px;background:#d97706;color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;text-decoration:none;white-space:nowrap;}
 .bmo:hover{opacity:.85;}
 .tmedia{display:inline-block;font-size:9px;font-weight:600;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:3px;padding:1px 5px;margin-left:3px;}
-
-/* row delete btn */
-.drbtn{display:none;background:none;border:none;color:#ef4444;cursor:pointer;font-size:15px;padding:0 3px;line-height:1;vertical-align:middle;}
+/* read toggle button */
+.read-btn{background:none;border:1.5px solid var(--bd);border-radius:4px;font-size:10px;cursor:pointer;padding:2px 6px;color:var(--mu);transition:all .15s;white-space:nowrap;font-family:'Noto Sans JP',sans-serif;flex-shrink:0;}
+.read-btn:hover{border-color:#10b981;color:#059669;}
+.read-btn.done{background:#dcfce7;border-color:#86efac;color:#15803d;}
+/* row delete */
+.drbtn{display:none;background:none;border:none;color:#ef4444;cursor:pointer;font-size:15px;padding:0 3px;line-height:1;vertical-align:middle;flex-shrink:0;}
 .ai.eon .drbtn{display:inline;}
+/* action cell flex */
+.td-act{white-space:nowrap;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
 
-/* ── ADD ISSUE ROW ── */
+/* ════════════════════════════════════════
+   ADD ISSUE ROW
+════════════════════════════════════════ */
 .air{display:none;}
 .ai.eon .air{display:table-row;}
 .air td{background:#f0f7ff;padding:10px 13px;}
 .add-url-form{display:flex;flex-direction:column;gap:6px;}
 .add-url-form .row1{display:flex;gap:6px;align-items:stretch;flex-wrap:wrap;}
-.add-url-form .row2{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
-.inp-label{
-  border:1px solid var(--bd);border-radius:5px;padding:5px 8px;
-  font-size:12px;font-family:'Noto Sans JP',sans-serif;
-  background:var(--wh);color:var(--tx);outline:none;width:160px;
-}
+.inp-label{border:1px solid var(--bd);border-radius:5px;padding:5px 8px;font-size:12px;font-family:'Noto Sans JP',sans-serif;background:var(--wh);color:var(--tx);outline:none;width:160px;}
 .inp-label:focus{border-color:var(--ac);}
-.inp-url-wrap{flex:1;min-width:260px;position:relative;}
-.inp-url{
-  width:100%;border:1px solid var(--bd);border-radius:5px;padding:5px 8px;
-  font-size:12px;font-family:'DM Mono',monospace;
-  background:var(--wh);color:var(--tx);outline:none;
-}
+.inp-url-wrap{flex:1;min-width:240px;}
+.inp-url{width:100%;border:1px solid var(--bd);border-radius:5px;padding:5px 8px;font-size:12px;font-family:'DM Mono',monospace;background:var(--wh);color:var(--tx);outline:none;}
 .inp-url:focus{border-color:var(--ac);}
 .inp-url.ok{border-color:#10b981;background:#f0fdf4;}
 .inp-url.err{border-color:#ef4444;background:#fef2f2;}
@@ -137,57 +184,101 @@ td{padding:7px 11px;vertical-align:middle;}
 .bai:hover{opacity:.88;}
 .bai:disabled{opacity:.4;cursor:not-allowed;}
 
-/* ── MODAL ── */
-.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:100;align-items:center;justify-content:center;}
+/* ════════════════════════════════════════
+   THUMBNAIL (機能7)
+   dマガジンの画像はログインセッション必須のため
+   直接 <img src> では CORS + 認証エラーになる。
+   ホバー時にItemページリンクのプレビュー枠のみ表示。
+════════════════════════════════════════ */
+/* (thumbnail実装: CORSエラーのためダミー枠のみ — コメント参照) */
+
+/* ════════════════════════════════════════
+   MODAL
+════════════════════════════════════════ */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center;padding:16px;}
 .mo.show{display:flex;}
-.mbox{background:var(--wh);border-radius:12px;padding:24px;width:90%;max-width:480px;box-shadow:var(--sh3);}
+.mbox{background:var(--wh);border-radius:12px;padding:24px;width:100%;max-width:480px;box-shadow:var(--sh3);max-height:90vh;overflow-y:auto;}
 .mbox h3{font-size:15px;font-weight:700;margin-bottom:16px;}
 .mbox p{font-size:12px;color:var(--mu);margin-top:6px;line-height:1.6;}
 .mbox label{display:block;font-size:11px;color:var(--mu);margin:12px 0 4px;}
 .mbox input,.mbox select{width:100%;border:1px solid var(--bd);border-radius:6px;padding:8px 10px;font-size:13px;font-family:'Noto Sans JP',sans-serif;color:var(--tx);outline:none;}
 .mbox input:focus,.mbox select:focus{border-color:var(--ac);}
-.mbtns{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;}
+.mbox textarea{width:100%;border:1px solid var(--bd);border-radius:6px;padding:8px 10px;font-size:11px;font-family:'DM Mono',monospace;color:var(--tx);outline:none;resize:vertical;min-height:120px;}
+.mbox textarea:focus{border-color:var(--ac);}
+.mbtns{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;flex-wrap:wrap;}
 .bcanc{padding:7px 16px;border-radius:6px;border:1px solid var(--bd);background:var(--wh);font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
 .bok{padding:7px 16px;border-radius:6px;border:none;background:var(--ac);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
-.bdanger{background:#ef4444;}
+.bdanger{background:#ef4444 !important;}
 .bsm{display:inline-flex;align-items:center;gap:3px;border:1px solid var(--bd);background:var(--wh);color:var(--mu);font-size:10px;font-weight:500;padding:2px 7px;border-radius:5px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
 .bsm:hover{border-color:var(--ac);color:var(--ac);}
+/* sync modal specific */
+.sync-section{background:var(--bg);border-radius:8px;padding:14px;margin-top:14px;}
+.sync-section h4{font-size:12px;font-weight:700;margin-bottom:8px;color:var(--tx);}
+.sync-status{font-size:11px;margin-top:6px;padding:6px 10px;border-radius:5px;display:none;}
+.sync-status.ok{display:block;background:#dcfce7;color:#15803d;}
+.sync-status.err{display:block;background:#fef2f2;color:#dc2626;}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media(max-width:600px){
+  .tb{padding:8px 12px;}
+  .main{padding:12px 12px;}
+  .tbr{gap:4px;}
+  .bet,.badd,.bex,.bsync{padding:5px 8px;font-size:11px;}
+  .hdr{padding:11px 14px;}
+  .ah{padding:10px 10px;}
+  .td-act{gap:3px;}
+}
 </style>
 </head>
 <body>
 
+<!-- ════ EDIT BANNER ════ -->
 <div class="ebanner" id="eb">
-  <span>✏️ 編集モード — 雑誌の追加・削除・名前変更、号の追加・削除ができます</span>
+  <span>✏️ 編集モード — ドラッグで並び替え、★でお気に入り、号の追加・削除・整理ができます</span>
   <button class="bsm" onclick="resetData()">🔄 リセット</button>
 </div>
 
+<!-- ════ HEADER ════ -->
 <header class="hdr">
   <div class="logo">d</div>
-  <div class="ht"><h1>dマガジン 直リンクポータル</h1><p>配信中の号のみ掲載 ／ 2026-04-25 時点</p></div>
+  <div class="ht">
+    <h1>dマガジン 直リンクポータル</h1>
+    <p>配信中の号のみ掲載 ／ 2026-04-25 時点</p>
+  </div>
   <div class="hr"><span class="upd" id="ul">更新: 2026-04-25</span></div>
 </header>
 
+<!-- ════ TOOLBAR ════ -->
 <div class="tb">
   <div class="sw">
     <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input id="si" type="text" placeholder="雑誌名で絞り込み…" oninput="fil()">
+    <input id="si" type="text" placeholder="雑誌名・号数で絞り込み…" oninput="fil()">
   </div>
   <div class="fbs">
     <button class="fb on" onclick="sf('all',this)">すべて</button>
     <button class="fb" onclick="sf('monthly',this)">月刊</button>
     <button class="fb" onclick="sf('seasonal',this)">季刊/不定期</button>
     <button class="fb" onclick="sf('mook',this)">ムック/単発</button>
+    <button class="fb fav-tab" onclick="sf('fav',this)">★ お気に入り</button>
   </div>
   <span class="cnt" id="cl"></span>
   <div class="tbr">
     <button class="bet" id="et" onclick="toggleEdit()">✏️ 編集</button>
+    <button class="badd" onclick="openAddMag('monthly')">＋ 雑誌を追加</button>
+    <button class="bsync" onclick="openModal('syncModal')">📋 データ同期</button>
     <button class="bex" onclick="exportHTML()">💾 HTMLエクスポート</button>
   </div>
 </div>
 
+<!-- ════ MAIN ════ -->
 <div class="main" id="mc"></div>
 
-<!-- 雑誌追加 modal -->
+<!-- ════════════════════════════════════════
+     MODALS
+════════════════════════════════════════ -->
+<!-- 雑誌追加 -->
 <div class="mo" id="addMagModal">
   <div class="mbox">
     <h3>📚 雑誌を追加</h3>
@@ -208,7 +299,7 @@ td{padding:7px 11px;vertical-align:middle;}
   </div>
 </div>
 
-<!-- 雑誌名変更 modal -->
+<!-- 雑誌名変更 -->
 <div class="mo" id="renameMagModal">
   <div class="mbox">
     <h3>✏️ 雑誌名・種別を変更</h3>
@@ -229,22 +320,49 @@ td{padding:7px 11px;vertical-align:middle;}
   </div>
 </div>
 
-<!-- 確認 modal -->
+<!-- 確認（汎用） -->
 <div class="mo" id="confirmModal">
   <div class="mbox">
     <h3 id="confirm-title">確認</h3>
     <p id="confirm-msg"></p>
     <div class="mbtns">
       <button class="bcanc" onclick="closeModal('confirmModal')">キャンセル</button>
-      <button class="bok bdanger" onclick="doConfirm()">削除する</button>
+      <button class="bok bdanger" id="confirm-ok" onclick="doConfirm()">実行</button>
+    </div>
+  </div>
+</div>
+
+<!-- データ同期（機能5） -->
+<div class="mo" id="syncModal">
+  <div class="mbox">
+    <h3>📋 データ同期</h3>
+    <p>デバイス間でデータを共有したり、バックアップを取ることができます。</p>
+
+    <div class="sync-section">
+      <h4>A. エクスポート — 現在のデータをコピー</h4>
+      <p style="font-size:11px;color:var(--mu);margin-bottom:8px;">クリップボードにJSONをコピーします。別のデバイスや別のブラウザの「復元」欄に貼り付けてください。</p>
+      <button class="bok" style="font-size:12px;padding:6px 14px;" onclick="syncCopy()">📋 データをコピー</button>
+      <div class="sync-status" id="copy-status"></div>
+    </div>
+
+    <div class="sync-section" style="margin-top:10px;">
+      <h4>B. インポート — データを復元</h4>
+      <p style="font-size:11px;color:var(--mu);margin-bottom:8px;">エクスポートしたJSONをここに貼り付けて「復元する」を押してください。現在のデータは上書きされます。</p>
+      <label>JSONを貼り付け</label>
+      <textarea id="sync-import-ta" placeholder='[{"t":"monthly","n":"LDK",...}]'></textarea>
+      <div class="sync-status" id="import-status"></div>
+      <div class="mbtns" style="margin-top:12px;">
+        <button class="bcanc" onclick="closeModal('syncModal')">閉じる</button>
+        <button class="bok" style="background:#8b5cf6;" onclick="syncImport()">📥 復元する</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════════════
-//  DATA
-// ══════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+//  DEFAULT DATA
+// ════════════════════════════════════════════════════════════════
 const DD = [
 {t:'monthly',n:'ダイヤモンドZAi',i:[
   {l:'2026年6月号', c:'6183f6dbe74294cbb1d92f7b6fcc32257e4c374b70f699e9156265787bf33c3e'},
@@ -291,12 +409,8 @@ const DD = [
   {l:'2025年7月号',  c:'65271d59b5f19534211879b30fe3ed24dec7fbd47518d8f489a4f6fc952c068b'},
   {l:'2025年6月号',  c:'4e3f6d7f4bf95276cdf5729f9ca6d413230dacbf9889ad314c3b88190514e1fb'},
 ]},
-{t:'monthly',n:'いぬのきもち',i:[
-  {l:'2026年5月号', c:'43e75af9a569281db78c9b0e464d626dabb6ef20ab10e791f445c1c82823113b'},
-]},
-{t:'monthly',n:'ねこのきもち',i:[
-  {l:'2026年5月号', c:'d8842ab7560d4599f50755785bcdc8644bc46efa03a4322f4a2f0f9e818a468e'},
-]},
+{t:'monthly',n:'いぬのきもち',i:[{l:'2026年5月号', c:'43e75af9a569281db78c9b0e464d626dabb6ef20ab10e791f445c1c82823113b'}]},
+{t:'monthly',n:'ねこのきもち',i:[{l:'2026年5月号', c:'d8842ab7560d4599f50755785bcdc8644bc46efa03a4322f4a2f0f9e818a468e'}]},
 {t:'monthly',n:'NHK きょうの健康',i:[]},
 {t:'monthly',n:'からだにいいこと',i:[]},
 {t:'monthly',n:'Tarzan',i:[
@@ -304,9 +418,7 @@ const DD = [
   {l:'2026年3月12日号 No.920', c:'9b5cc0156d701a5b376b1c55b17086d28cfe5d0b58cb9ac55b7e6e67afffb95e'},
   {l:'2026年2月26日号 No.919', c:'6f80c853ce1dcaf9be4aa9171410f547d2e7e80548be9545d3a573e2f26d39da'},
 ]},
-{t:'monthly',n:"Woman's SHAPE & Sports",note:'年4回',i:[
-  {l:'Vol.30', c:'98dcacab42e41b99c06e97dd3394f7ad274233c28a14444f79fc8fe6dcdef631'},
-]},
+{t:'monthly',n:"Woman's SHAPE & Sports",note:'年4回',i:[{l:'Vol.30', c:'98dcacab42e41b99c06e97dd3394f7ad274233c28a14444f79fc8fe6dcdef631'}]},
 {t:'monthly',n:'レタスクラブ',i:[
   {l:'2026年5月号', c:'1475e7faf63ed1fc74e3209d225b3ebb508e6b169b3d88513add2252012902ee'},
   {l:'2026年4月号', c:'da8e6db518b9f7bd63f8589d08f24b8912686143e07b903e69e25c1e4152c972'},
@@ -323,30 +435,20 @@ const DD = [
   {l:'2026年5月号 ※Mediaページ', m:'39ff0dafce3f8145cc30e5b2a13f7326e9a3e128ad102305336589b54f57da47'},
   {l:'2026年1月号', c:'d25b2ba3a401ddf719e0f0b57bd8055c88e8955350890d3b358c6a96f9d2dac3'},
 ]},
-{t:'monthly',n:'ESSE',i:[
-  {l:'2026年4月号', c:'6101d7c418942ce4e3b74395a79f34519589a5c6c0a379588d0f8e50edd33f00'},
-]},
+{t:'monthly',n:'ESSE',i:[{l:'2026年4月号', c:'6101d7c418942ce4e3b74395a79f34519589a5c6c0a379588d0f8e50edd33f00'}]},
 {t:'monthly',n:'GetNavi',i:[
   {l:'2026年6・7月号', c:'fe4f7ad5358098a3c3aab6ad1c55e870bed7f6c10bf95ebca46ff1f4ee5d7c2f'},
   {l:'2026年4月号',   c:'786091af886e7cde09860f4d7f68003a06b2ebffe7159c03a37f608e4d49310d'},
   {l:'2026年1月号',   c:'d6fe6e15524c478d5d84441c5aa7df87bfb409a1a07b09c510e6e792fef3749c'},
 ]},
-{t:'monthly',n:'日経トレンディ',i:[
-  {l:'2026年5月号', c:'590415596d7b657c213a8d3f4dc45a82da93dbbda93c0224da4b4c3f34410d6d'},
-]},
+{t:'monthly',n:'日経トレンディ',i:[{l:'2026年5月号', c:'590415596d7b657c213a8d3f4dc45a82da93dbbda93c0224da4b4c3f34410d6d'}]},
 {t:'monthly',n:'GoodsPress',i:[
   {l:'2026年3月号', c:'1cf989910e067caf236beb48553dce70eeacd206b840acc641883e3493b01f45'},
   {l:'2025年8・9月合併号', c:'d79d2290badbe5440b53eb0751f6df0f6a3a4f812af3d2b5f03d8129110a780d'},
 ]},
-{t:'seasonal',n:'ヨガジャーナル日本版',note:'年4回',i:[
-  {l:'2026年春号 Vol.100 ※Mediaページ', m:'ce9835654ce0775ebb473231562cf0475a3900b80fad895d33daecc6bf34207d'},
-]},
-{t:'seasonal',n:'初めてのひよこクラブ',note:'季刊',i:[
-  {l:'2026年冬号', c:'74b8416748292b2d66605d273032fc2bac101a55a9e8212f7c5280e1d0194d1c'},
-]},
-{t:'seasonal',n:'初めてのたまごクラブ',note:'季刊',i:[
-  {l:'直近号', c:'c236cd05fc55f8bdb60bf509d2f6663983eaf8008502d180799f3e2e3a5fc17e'},
-]},
+{t:'seasonal',n:'ヨガジャーナル日本版',note:'年4回',i:[{l:'2026年春号 Vol.100 ※Mediaページ', m:'ce9835654ce0775ebb473231562cf0475a3900b80fad895d33daecc6bf34207d'}]},
+{t:'seasonal',n:'初めてのひよこクラブ',note:'季刊',i:[{l:'2026年冬号', c:'74b8416748292b2d66605d273032fc2bac101a55a9e8212f7c5280e1d0194d1c'}]},
+{t:'seasonal',n:'初めてのたまごクラブ',note:'季刊',i:[{l:'直近号', c:'c236cd05fc55f8bdb60bf509d2f6663983eaf8008502d180799f3e2e3a5fc17e'}]},
 {t:'mook',n:'新NISA完全ガイド（ダイヤモンドZAi）',i:[{l:'最新号',c:'80dc5a653bf29205572a7eb74f198bf0a83cab054f1ccc4a41196dfe0bdbc489'}]},
 {t:'mook',n:'投資信託完全ガイド',i:[{l:'最新号',c:'8d84d83d54e1fd968556a497ab8002bb1b4fdf21d696dcef643fac7c9ab595c7'}]},
 {t:'mook',n:'米国株完全ガイド',i:[{l:'最新号',c:'bfcb85a9227f8e351265524d96101b0d5307a07715dc18905f7b7c4492ed35dc'}]},
@@ -375,66 +477,102 @@ const DD = [
 {t:'mook',n:'LDK ベビー用品完全ガイド',i:[{l:'2026年版',c:'5e09735a7bf3d6738fa8987499f42911118678b405f2e3f08d8e6bae6594d2b6'}]},
 ];
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 //  STATE
-// ══════════════════════════════════════════════
-const SK='dmag_v4';
-let DATA=load(), eMode=false, cur='all', pendingCb=null, renamingIdx=null;
-const opened=new Set();
+// ════════════════════════════════════════════════════════════════
+const SK = 'dmag_v5'; // バージョンアップ: fav/read フィールド追加
+let DATA = load();
+let eMode = false, cur = 'all', pendingCb = null, renamingIdx = null;
+const opened = new Set();
+// drag state
+let dragSrcIdx = null;
 
+// ════════════════════════════════════════════════════════════════
+//  STORAGE
+// ════════════════════════════════════════════════════════════════
 function load(){
-  try{const s=localStorage.getItem(SK);return s?JSON.parse(s):JSON.parse(JSON.stringify(DD));}
-  catch{return JSON.parse(JSON.stringify(DD));}
+  try{
+    const s = localStorage.getItem(SK);
+    if(s) return JSON.parse(s);
+    // v4 からの移行: 古いキーがあれば引き継ぐ
+    const old = localStorage.getItem('dmag_v4');
+    if(old) return JSON.parse(old);
+    return JSON.parse(JSON.stringify(DD));
+  }catch{ return JSON.parse(JSON.stringify(DD)); }
 }
 function save(){
-  localStorage.setItem(SK,JSON.stringify(DATA));
-  document.getElementById('ul').textContent='更新: '+new Date().toLocaleDateString('ja-JP');
+  localStorage.setItem(SK, JSON.stringify(DATA));
+  document.getElementById('ul').textContent = '更新: ' + new Date().toLocaleDateString('ja-JP');
 }
 function resetData(){
-  if(!confirm('すべての編集を破棄して初期データに戻しますか？'))return;
-  DATA=JSON.parse(JSON.stringify(DD));
+  if(!confirm('すべての編集（既読・お気に入り含む）を破棄して初期データに戻しますか？')) return;
+  DATA = JSON.parse(JSON.stringify(DD));
   localStorage.removeItem(SK);
   render();
 }
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 //  URL パーサー
-//  item/[hash]/1000/ → {type:'item', hash}
-//  media/[hash]/     → {type:'media', hash}
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 function parseUrl(raw){
-  const s=raw.trim().replace(/^https?:\/\//,'').replace(/^dmagazine\.docomo\.ne\.jp\//,'');
-  // item
-  const mi=s.match(/item\/([a-f0-9]{40,70})(?:\/\d+)?/);
+  const s = raw.trim().replace(/^https?:\/\//,'').replace(/^dmagazine\.docomo\.ne\.jp\//,'');
+  const mi = s.match(/item\/([a-f0-9]{40,70})(?:\/\d+)?/);
   if(mi) return {type:'item', hash:mi[1]};
-  // media
-  const mm=s.match(/media\/([a-f0-9]{40,70})/);
+  const mm = s.match(/media\/([a-f0-9]{40,70})/);
   if(mm) return {type:'media', hash:mm[1]};
   return null;
 }
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 //  URL HELPERS
-// ══════════════════════════════════════════════
-const B='https://dmagazine.docomo.ne.jp';
-const vU=c=>`${B}/view/?cid=${c}&cti=&cc=1000&return_url=%2Fitem%2F${c}%2F1000%2F`;
-const iU=c=>`${B}/item/${c}/1000/`;
-const mU=h=>`${B}/media/${h}/`;
-const gU=n=>`https://www.google.com/search?q=site:dmagazine.docomo.ne.jp+${encodeURIComponent(n)}`;
-const ICO=`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
-const LBL={monthly:'月刊',seasonal:'季刊/不定期',mook:'ムック'};
+// ════════════════════════════════════════════════════════════════
+const B = 'https://dmagazine.docomo.ne.jp';
+const vU = c => `${B}/view/?cid=${c}&cti=&cc=1000&return_url=%2Fitem%2F${c}%2F1000%2F`;
+const iU = c => `${B}/item/${c}/1000/`;
+const mU = h => `${B}/media/${h}/`;
+const gU = n => `https://www.google.com/search?q=site:dmagazine.docomo.ne.jp+${encodeURIComponent(n)}`;
+const ICO = `<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+const LBL = {monthly:'月刊', seasonal:'季刊/不定期', mook:'ムック'};
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 //  RENDER
-// ══════════════════════════════════════════════
-function mkRow(iss,mi,ii){
-  const del=eMode?`<button class="drbtn" onclick="event.stopPropagation();delIssue(${mi},${ii})" title="削除">✕</button> `:'';
+// ════════════════════════════════════════════════════════════════
+function mkRow(iss, mi, ii){
+  const isRead = !!iss.r;
+  const rowCls = isRead ? 'read-row' : '';
+  const readBtnCls = isRead ? 'read-btn done' : 'read-btn';
+  const readBtnTxt = isRead ? '✓ 既読' : '既読';
+  const del = eMode ? `<button class="drbtn" onclick="event.stopPropagation();delIssue(${mi},${ii})" title="削除">✕</button>` : '';
+
+  // ── 機能7: サムネイル ──
+  // dマガジンの画像はログインセッション（Cookie）が必須のため
+  // ブラウザの <img src> では CORS + 401 エラーになり取得不可。
+  // そのため画像表示は実装せず、ItemページURLへのリンクのみ提供する。
+  // （もしdマガジンが将来パブリックなサムネイルURLを公開した場合は
+  //   img src を追加できる構造にしておく。）
+
   if(iss.m){
-    const u=mU(iss.m),sh='/media/'+iss.m.slice(0,12)+'…/';
-    return `<tr><td class="ti">${iss.l}<span class="tmedia">Media</span></td><td class="tu"><a href="${u}" class="ml" target="_blank">${sh}</a></td><td style="white-space:nowrap">${del}<a class="bmo" href="${u}" target="_blank">${ICO}Mediaページ</a></td></tr>`;
+    const u = mU(iss.m), sh = '/media/'+iss.m.slice(0,12)+'…/';
+    return `<tr class="${rowCls}">
+      <td class="ti">${iss.l}<span class="tmedia">Media</span></td>
+      <td class="tu"><a href="${u}" class="ml" target="_blank">${sh}</a></td>
+      <td><div class="td-act">
+        <button class="${readBtnCls}" onclick="toggleRead(${mi},${ii})">${readBtnTxt}</button>
+        ${del}
+        <a class="bmo" href="${u}" target="_blank">${ICO}Mediaページ</a>
+      </div></td>
+    </tr>`;
   }
-  const u=iU(iss.c),sh='/item/'+iss.c.slice(0,12)+'…/1000/';
-  return `<tr><td class="ti">${iss.l}</td><td class="tu"><a href="${u}" target="_blank">${sh}</a></td><td style="white-space:nowrap">${del}<a class="bv" href="${vU(iss.c)}" target="_blank">${ICO}今すぐ読む</a></td></tr>`;
+  const u = iU(iss.c), sh = '/item/'+iss.c.slice(0,12)+'…/1000/';
+  return `<tr class="${rowCls}">
+    <td class="ti">${iss.l}</td>
+    <td class="tu"><a href="${u}" target="_blank">${sh}</a></td>
+    <td><div class="td-act">
+      <button class="${readBtnCls}" onclick="toggleRead(${mi},${ii})">${readBtnTxt}</button>
+      ${del}
+      <a class="bv" href="${vU(iss.c)}" target="_blank">${ICO}今すぐ読む</a>
+    </div></td>
+  </tr>`;
 }
 
 function mkAddRow(mi){
@@ -445,12 +583,12 @@ function mkAddRow(mi){
           <input class="inp-label" id="lbl-${mi}" type="text" placeholder="号数（例: 2026年7月号）">
           <div class="inp-url-wrap">
             <input class="inp-url" id="url-${mi}" type="text"
-              placeholder="URLを貼り付け（例: https://dmagazine.docomo.ne.jp/item/abc.../1000/）"
+              placeholder="URLを貼り付け（https://dmagazine.docomo.ne.jp/item/…）"
               oninput="onUrlInput(${mi})">
             <div class="url-hint" id="hint-${mi}">Item URL または Media URL をそのまま貼り付けてください</div>
           </div>
         </div>
-        <div class="row2">
+        <div style="display:flex;gap:6px;">
           <button class="bai" id="addBtn-${mi}" onclick="addIssue(${mi})" disabled>＋ 追加</button>
         </div>
       </div>
@@ -458,39 +596,61 @@ function mkAddRow(mi){
   </tr>`;
 }
 
-function mkBody(m,mi){
-  const rows=m.i.length===0
+function mkBody(m, mi){
+  const rows = m.i.length === 0
     ? `<tr><td colspan="3" class="empty-state">配信中号のURLが未登録です。編集モードで追加してください。</td></tr>`
-    : m.i.map((iss,ii)=>mkRow(iss,mi,ii)).join('');
+    : m.i.map((iss,ii) => mkRow(iss, mi, ii)).join('');
+  const thAct = eMode ? '操作' : '既読 ／ 開く';
   return `<div class="bin"><table>
     <thead><tr>
       <th>号数</th>
       <th>📎 Item/MediaページURL（クリックで開く）</th>
-      <th>${eMode?'操作':'ビューアを開く'}</th>
+      <th>${thAct}</th>
     </tr></thead>
     <tbody>${rows}${mkAddRow(mi)}</tbody>
   </table></div>`;
 }
 
-function mkItem(m,mi){
-  const note=m.note?`<span class="nt">— ${m.note}</span>`:'';
-  const isO=opened.has(m.n);
-  const cntEl=m.i.length===0
-    ?`<span class="ic0">URL未登録</span>`
-    :`<span class="ic">${m.i.length}件</span>`;
-  const editBtns=eMode?`
+function mkItem(m, mi){
+  const note = m.note ? `<span class="nt">— ${m.note}</span>` : '';
+  const isO = opened.has(m.n);
+  const cnt = m.i.length;
+  const cntEl = cnt===0
+    ? `<span class="ic0">URL未登録</span>`
+    : `<span class="ic">${cnt}件</span>`;
+  const isFav = !!m.fav;
+  const favCls = isFav ? 'fav-btn on' : 'fav-btn off';
+  const favTitle = isFav ? 'お気に入り解除' : 'お気に入りに追加';
+
+  const editBtns = eMode ? `
     <div class="edit-hdr-btns" onclick="event.stopPropagation()">
       <button class="btn-rename" onclick="openRenameMag(${mi})">✏️ 編集</button>
-      <button class="btn-del-mag" onclick="deleteMag(${mi})">🗑 削除</button>
-    </div>`:''
-  ;
+      <button class="btn-purge" onclick="purgeMag(${mi})">🗑️ 整理</button>
+      <button class="btn-del-mag" onclick="deleteMag(${mi})">✕ 削除</button>
+    </div>` : '';
+
+  // drag handle (edit mode)
+  const handle = eMode
+    ? `<span class="drag-handle" title="ドラッグして並び替え">⠿</span>`
+    : '';
+
   return `<div class="ai${eMode?' eon':''}${isO?' open':''}"
-    data-t="${m.t}" data-n="${m.n.toLowerCase()}" id="ai${mi}">
+      data-t="${m.t}" data-n="${m.n.toLowerCase()}"
+      data-labels="${m.i.map(x=>x.l).join('|').toLowerCase()}"
+      id="ai${mi}"
+      ${eMode ? `draggable="true"
+        ondragstart="onDragStart(event,${mi})"
+        ondragover="onDragOver(event,${mi})"
+        ondrop="onDrop(event,${mi})"
+        ondragend="onDragEnd(event)"` : ''}>
     <button class="ah" onclick="tog(this)">
+      ${handle}
       <svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
       <span class="an">${m.n}</span>${note}
       <span class="bdg ${m.t}">${LBL[m.t]}</span>${cntEl}
-      <a class="bsrch" href="${gU(m.n)}" target="_blank" onclick="event.stopPropagation()">🔍 最新号を検索</a>
+      <button class="${favCls}" title="${favTitle}"
+        onclick="event.stopPropagation();toggleFav(${mi})">★</button>
+      <a class="bsrch" href="${gU(m.n)}" target="_blank" onclick="event.stopPropagation()">🔍 最新号</a>
       ${editBtns}
     </button>
     <div class="ab"${isO?' style="height:auto"':''}>${mkBody(m,mi)}</div>
@@ -498,114 +658,261 @@ function mkItem(m,mi){
 }
 
 function render(){
-  const secs=[
+  const secs = [
     {l:'月刊誌', t:'monthly'},
     {l:'季刊・不定期刊', t:'seasonal'},
     {l:'ムック・特別号（単発）', t:'mook'},
   ];
-  document.getElementById('mc').innerHTML=secs.map(s=>{
-    const addBtn=`<button class="add-mag-btn${eMode?' show':''}" onclick="openAddMag('${s.t}')">＋ 雑誌を追加</button>`;
-    const items=DATA.map((m,i)=>m.t===s.t?mkItem(m,i):'').join('');
+  document.getElementById('mc').innerHTML = secs.map(s => {
+    const addBtn = `<button class="add-mag-btn${eMode?' show':''}" onclick="openAddMag('${s.t}')">＋ 追加</button>`;
+    const items = DATA.map((m,i) => m.t===s.t ? mkItem(m,i) : '').join('');
     return `<div class="slbl">${s.l}${addBtn}</div><div class="alist">${items}</div>`;
   }).join('');
   fil();
 }
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+//  機能1: 既読トグル
+// ════════════════════════════════════════════════════════════════
+function toggleRead(mi, ii){
+  DATA[mi].i[ii].r = !DATA[mi].i[ii].r;
+  save();
+  // 行だけ再描画（全renderを避けてスクロール位置を保持）
+  const item = document.getElementById(`ai${mi}`);
+  const body = item.querySelector('.ab');
+  const wasOpen = item.classList.contains('open');
+  const h = wasOpen ? body.scrollHeight : null;
+  item.querySelector('.bin').outerHTML = mkBody(DATA[mi], mi).replace('<div class="bin">','<div class="bin">');
+  // テーブル部分だけ差し替え
+  const newBin = document.createElement('div');
+  newBin.innerHTML = mkBody(DATA[mi], mi);
+  const oldBin = item.querySelector('.bin');
+  oldBin.replaceWith(newBin.firstChild);
+  if(wasOpen && h){ body.style.height = 'auto'; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能2: ドラッグ＆ドロップ並び替え
+// ════════════════════════════════════════════════════════════════
+function onDragStart(e, mi){
+  dragSrcIdx = mi;
+  e.dataTransfer.effectAllowed = 'move';
+  e.currentTarget.classList.add('dragging');
+}
+function onDragOver(e, mi){
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.ai').forEach(el => el.classList.remove('drag-over'));
+  if(mi !== dragSrcIdx) e.currentTarget.classList.add('drag-over');
+}
+function onDrop(e, mi){
+  e.preventDefault();
+  if(dragSrcIdx === null || dragSrcIdx === mi) return;
+  // DATA 配列内で移動
+  const moved = DATA.splice(dragSrcIdx, 1)[0];
+  const target = mi > dragSrcIdx ? mi - 1 : mi;
+  DATA.splice(target, 0, moved);
+  dragSrcIdx = null;
+  save(); render();
+}
+function onDragEnd(e){
+  dragSrcIdx = null;
+  document.querySelectorAll('.ai').forEach(el => {
+    el.classList.remove('dragging','drag-over');
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能3: 検索（雑誌名 + 号ラベル）
+// ════════════════════════════════════════════════════════════════
+function sf(t, btn){
+  cur = t;
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  fil();
+}
+function fil(){
+  const q = document.getElementById('si').value.toLowerCase().trim();
+  let n = 0;
+  document.querySelectorAll('.ai').forEach(el => {
+    const nameHit = el.dataset.n.includes(q);
+    const labelHit = q ? el.dataset.labels.includes(q) : false;
+    const typeOk = cur==='all'
+      || el.dataset.t===cur
+      || (cur==='fav' && el.querySelector('.fav-btn.on'));
+    const textOk = !q || nameHit || labelHit;
+    const ok = typeOk && textOk;
+    el.classList.toggle('hidden', !ok);
+    if(ok) n++;
+  });
+  document.getElementById('cl').textContent = n + ' 件表示中';
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能4: お気に入り
+// ════════════════════════════════════════════════════════════════
+function toggleFav(mi){
+  DATA[mi].fav = !DATA[mi].fav;
+  save();
+  // ★ボタンだけ更新
+  const item = document.getElementById(`ai${mi}`);
+  const btn = item.querySelector('.fav-btn');
+  const isFav = DATA[mi].fav;
+  btn.className = isFav ? 'fav-btn on' : 'fav-btn off';
+  btn.title = isFav ? 'お気に入り解除' : 'お気に入りに追加';
+  // data-n に fav 情報を埋めないので、フィルターは DOM の .fav-btn.on を参照
+  fil();
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能5: クリップボードデータ同期
+// ════════════════════════════════════════════════════════════════
+function syncCopy(){
+  const json = JSON.stringify(DATA, null, 2);
+  const st = document.getElementById('copy-status');
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(json).then(()=>{
+      st.className='sync-status ok';
+      st.textContent='✅ クリップボードにコピーしました';
+    }).catch(()=>{ syncCopyFallback(json, st); });
+  } else { syncCopyFallback(json, st); }
+}
+function syncCopyFallback(text, st){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{
+    document.execCommand('copy');
+    st.className='sync-status ok'; st.textContent='✅ コピーしました';
+  }catch{
+    st.className='sync-status err'; st.textContent='❌ コピーに失敗しました。テキストを手動でコピーしてください。';
+  }
+  document.body.removeChild(ta);
+}
+function syncImport(){
+  const ta = document.getElementById('sync-import-ta').value.trim();
+  const st = document.getElementById('import-status');
+  if(!ta){ st.className='sync-status err'; st.textContent='❌ JSONを貼り付けてください'; return; }
+  try{
+    const parsed = JSON.parse(ta);
+    if(!Array.isArray(parsed)) throw new Error('配列ではありません');
+    DATA = parsed;
+    save();
+    st.className='sync-status ok';
+    st.textContent='✅ 復元しました。画面を更新します…';
+    setTimeout(()=>{ closeModal('syncModal'); render(); }, 1000);
+  }catch(e){
+    st.className='sync-status err';
+    st.textContent='❌ 無効なJSON: '+e.message;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  機能6: 古い号の一括整理（パージ）
+// ════════════════════════════════════════════════════════════════
+function purgeMag(mi){
+  const m = DATA[mi];
+  const total = m.i.length;
+  if(total <= 3){
+    alert(`「${m.n}」は${total}件しかないため整理できません（3件以下）。`);
+    return;
+  }
+  const keepStr = prompt(`「${m.n}」には${total}件の号があります。\n最新の何件を残しますか？（3〜${total-1}の数字を入力）`, '3');
+  if(keepStr === null) return;
+  const keep = parseInt(keepStr, 10);
+  if(isNaN(keep) || keep < 1 || keep >= total){
+    alert('1 〜 '+(total-1)+' の数字を入力してください。'); return;
+  }
+  openConfirm(
+    `「${m.n}」の最新${keep}件だけを残し、残り${total-keep}件を削除します。よろしいですか？`,
+    () => { DATA[mi].i = DATA[mi].i.slice(0, keep); save(); render(); }
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
 //  ACCORDION
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 function tog(btn){
-  const item=btn.closest('.ai'),body=item.querySelector('.ab');
-  const name=item.querySelector('.an').textContent;
-  const isO=item.classList.contains('open');
+  const item = btn.closest('.ai');
+  const body = item.querySelector('.ab');
+  const name = item.querySelector('.an').textContent;
+  const isO = item.classList.contains('open');
   if(isO){
-    body.style.height=body.scrollHeight+'px';
-    item.classList.remove('open');opened.delete(name);
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{body.style.height='0';}));
+    body.style.height = body.scrollHeight+'px';
+    item.classList.remove('open'); opened.delete(name);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ body.style.height='0'; }));
   }else{
-    item.classList.add('open');opened.add(name);
-    body.style.height=body.scrollHeight+'px';
-    body.addEventListener('transitionend',function h(){
-      if(item.classList.contains('open'))body.style.height='auto';
-      body.removeEventListener('transitionend',h);
+    item.classList.add('open'); opened.add(name);
+    body.style.height = body.scrollHeight+'px';
+    body.addEventListener('transitionend', function h(){
+      if(item.classList.contains('open')) body.style.height='auto';
+      body.removeEventListener('transitionend', h);
     });
   }
 }
 
-// ══════════════════════════════════════════════
-//  URL INPUT ── リアルタイムバリデーション
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+//  URL INPUT リアルタイムバリデーション
+// ════════════════════════════════════════════════════════════════
 function onUrlInput(mi){
-  const inp=document.getElementById(`url-${mi}`);
-  const hint=document.getElementById(`hint-${mi}`);
-  const btn=document.getElementById(`addBtn-${mi}`);
-  const raw=inp.value.trim();
+  const inp = document.getElementById(`url-${mi}`);
+  const hint = document.getElementById(`hint-${mi}`);
+  const btn = document.getElementById(`addBtn-${mi}`);
+  const raw = inp.value.trim();
   if(!raw){
-    inp.className='inp-url';
-    hint.className='url-hint';
+    inp.className='inp-url'; hint.className='url-hint';
     hint.textContent='Item URL または Media URL をそのまま貼り付けてください';
-    btn.disabled=true;
-    return;
+    btn.disabled=true; return;
   }
-  const parsed=parseUrl(raw);
+  const parsed = parseUrl(raw);
   if(parsed){
-    inp.className='inp-url ok';
-    const typeLabel=parsed.type==='item'?'✅ ItemページURL を認識しました':'✅ MediaページURL を認識しました';
-    hint.className='url-hint ok';
-    hint.textContent=typeLabel+`（hash: ${parsed.hash.slice(0,16)}…）`;
+    inp.className='inp-url ok'; hint.className='url-hint ok';
+    hint.textContent=(parsed.type==='item'?'✅ ItemページURL':'✅ MediaページURL')+` を認識（hash: ${parsed.hash.slice(0,16)}…）`;
     btn.disabled=false;
   }else{
-    inp.className='inp-url err';
-    hint.className='url-hint err';
+    inp.className='inp-url err'; hint.className='url-hint err';
     hint.textContent='❌ dmagazine.docomo.ne.jp の /item/ または /media/ URLを入力してください';
     btn.disabled=true;
   }
 }
 
-// ══════════════════════════════════════════════
-//  ISSUE — 追加 / 削除
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+//  ISSUE 追加 / 削除
+// ════════════════════════════════════════════════════════════════
 function addIssue(mi){
-  const lbl=document.getElementById(`lbl-${mi}`).value.trim();
-  const raw=document.getElementById(`url-${mi}`).value.trim();
-  if(!lbl){alert('号数（ラベル）を入力してください');return;}
-  const parsed=parseUrl(raw);
-  if(!parsed){alert('URLを正しく認識できませんでした');return;}
-  const iss=parsed.type==='item'?{l:lbl,c:parsed.hash}:{l:lbl,m:parsed.hash};
+  const lbl = document.getElementById(`lbl-${mi}`).value.trim();
+  const raw  = document.getElementById(`url-${mi}`).value.trim();
+  if(!lbl){ alert('号数（ラベル）を入力してください'); return; }
+  const parsed = parseUrl(raw);
+  if(!parsed){ alert('URLを正しく認識できませんでした'); return; }
+  const iss = parsed.type==='item' ? {l:lbl, c:parsed.hash} : {l:lbl, m:parsed.hash};
   DATA[mi].i.unshift(iss);
-  save();render();
+  save(); render();
 }
-
-function delIssue(mi,ii){
-  const iss=DATA[mi].i[ii];
-  openConfirm(`「${iss.l}」を削除しますか？`,()=>{
-    DATA[mi].i.splice(ii,1);save();render();
+function delIssue(mi, ii){
+  openConfirm(`「${DATA[mi].i[ii].l}」を削除しますか？`, ()=>{
+    DATA[mi].i.splice(ii,1); save(); render();
   });
 }
 
-// ══════════════════════════════════════════════
-//  MAGAZINE — 追加 / 名前変更 / 削除
-// ══════════════════════════════════════════════
-let addingType='monthly';
-
+// ════════════════════════════════════════════════════════════════
+//  MAGAZINE 追加 / 編集 / 削除
+// ════════════════════════════════════════════════════════════════
 function openAddMag(type){
-  addingType=type;
   document.getElementById('new-mag-name').value='';
-  document.getElementById('new-mag-type').value=type;
+  document.getElementById('new-mag-type').value=type||'monthly';
   document.getElementById('new-mag-note').value='';
   openModal('addMagModal');
   setTimeout(()=>document.getElementById('new-mag-name').focus(),80);
 }
-
 function doAddMag(){
-  const name=document.getElementById('new-mag-name').value.trim();
-  const type=document.getElementById('new-mag-type').value;
-  const note=document.getElementById('new-mag-note').value.trim()||undefined;
-  if(!name){alert('雑誌名を入力してください');return;}
-  DATA.push({t:type,n:name,note,i:[]});
-  save();closeModal('addMagModal');render();
+  const name = document.getElementById('new-mag-name').value.trim();
+  const type = document.getElementById('new-mag-type').value;
+  const note = document.getElementById('new-mag-note').value.trim()||undefined;
+  if(!name){ alert('雑誌名を入力してください'); return; }
+  DATA.push({t:type, n:name, note, i:[]});
+  save(); closeModal('addMagModal'); render();
 }
-
 function openRenameMag(mi){
   renamingIdx=mi;
   const m=DATA[mi];
@@ -615,88 +922,82 @@ function openRenameMag(mi){
   openModal('renameMagModal');
   setTimeout(()=>document.getElementById('rename-name').focus(),80);
 }
-
 function doRenameMag(){
-  if(renamingIdx===null)return;
+  if(renamingIdx===null) return;
   const name=document.getElementById('rename-name').value.trim();
-  if(!name){alert('雑誌名を入力してください');return;}
+  if(!name){ alert('雑誌名を入力してください'); return; }
   DATA[renamingIdx].n=name;
   DATA[renamingIdx].t=document.getElementById('rename-type').value;
   const note=document.getElementById('rename-note').value.trim();
   DATA[renamingIdx].note=note||undefined;
   renamingIdx=null;
-  save();closeModal('renameMagModal');render();
+  save(); closeModal('renameMagModal'); render();
 }
-
 function deleteMag(mi){
-  openConfirm(`「${DATA[mi].n}」とすべての号を削除しますか？`,()=>{
-    DATA.splice(mi,1);save();render();
+  openConfirm(`「${DATA[mi].n}」とすべての号を削除しますか？`, ()=>{
+    DATA.splice(mi,1); save(); render();
   });
 }
 
-// ══════════════════════════════════════════════
-//  FILTER
-// ══════════════════════════════════════════════
-function sf(t,btn){
-  cur=t;
-  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');fil();
-}
-function fil(){
-  const q=document.getElementById('si').value.toLowerCase().trim();
-  let n=0;
-  document.querySelectorAll('.ai').forEach(el=>{
-    const ok=(cur==='all'||el.dataset.t===cur)&&(!q||el.dataset.n.includes(q));
-    el.classList.toggle('hidden',!ok);
-    if(ok)n++;
-  });
-  document.getElementById('cl').textContent=n+' 件表示中';
-}
-
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 //  EDIT MODE
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 function toggleEdit(){
   eMode=!eMode;
-  const btn=document.getElementById('et'),banner=document.getElementById('eb');
+  const btn=document.getElementById('et'), banner=document.getElementById('eb');
   btn.classList.toggle('act',eMode);
   btn.textContent=eMode?'✕ 編集終了':'✏️ 編集';
   banner.classList.toggle('show',eMode);
   render();
 }
 
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 //  MODAL HELPERS
-// ══════════════════════════════════════════════
-function openModal(id){document.getElementById(id).classList.add('show');}
-function closeModal(id){document.getElementById(id).classList.remove('show');}
-function openConfirm(msg,cb){
-  document.getElementById('confirm-msg').textContent=msg;
-  openModal('confirmModal');pendingCb=cb;
+// ════════════════════════════════════════════════════════════════
+function openModal(id){
+  document.getElementById(id).classList.add('show');
+  // sync modal: reset status
+  if(id==='syncModal'){
+    ['copy-status','import-status'].forEach(s=>{
+      const el=document.getElementById(s);
+      if(el){el.className='sync-status';el.textContent='';}
+    });
+    const ta=document.getElementById('sync-import-ta');
+    if(ta) ta.value='';
+  }
 }
-function doConfirm(){if(pendingCb)pendingCb();pendingCb=null;closeModal('confirmModal');}
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+function openConfirm(msg, cb, btnLabel='削除する'){
+  document.getElementById('confirm-msg').textContent=msg;
+  document.getElementById('confirm-ok').textContent=btnLabel;
+  openModal('confirmModal'); pendingCb=cb;
+}
+function doConfirm(){ if(pendingCb) pendingCb(); pendingCb=null; closeModal('confirmModal'); }
 
-// close on overlay click
+// overlay click to close
 document.querySelectorAll('.mo').forEach(el=>{
-  el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('show');});
+  el.addEventListener('click', e=>{ if(e.target===el) el.classList.remove('show'); });
 });
 
-// ══════════════════════════════════════════════
-//  EXPORT
-// ══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+//  EXPORT HTML
+// ════════════════════════════════════════════════════════════════
 function exportHTML(){
-  const dj=JSON.stringify(DATA,null,2);
-  const td=new Date().toISOString().slice(0,10);
-  const src=document.documentElement.outerHTML
-    .replace(/const DD = \[[\s\S]*?\];\n/,`const DD = ${dj};\n`)
-    .replace(/更新: [\d\-]+/g,`更新: ${td}`)
-    .replace(/2026-04-25 時点/,`${td} 時点`);
-  const b=new Blob([src],{type:'text/html;charset=utf-8'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(b);a.download='index.html';a.click();
+  const dj = JSON.stringify(DATA, null, 2);
+  const td = new Date().toISOString().slice(0,10);
+  const src = document.documentElement.outerHTML
+    .replace(/const DD = \[[\s\S]*?\];\n/, `const DD = ${dj};\n`)
+    .replace(/更新: [\d\-]+/g, `更新: ${td}`)
+    .replace(/2026-04-25 時点/, `${td} 時点`);
+  const b = new Blob([src], {type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href=URL.createObjectURL(b); a.download='index.html'; a.click();
   URL.revokeObjectURL(a.href);
 }
 
+// ════════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════════
 render();
 </script>
 </body>
